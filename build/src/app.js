@@ -50,9 +50,9 @@ var Server = /** @class */ (function () {
      */
     Server.prototype.config = function () {
         //add static paths
-        this.app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
+        this.app.use(express_1.default.static("public"));
         //configure pug
-        this.app.set("views", path_1.default.join(__dirname, "views"));
+        this.app.set("views", path_1.default.join(__dirname, "../../views"));
         this.app.set("view engine", "pug");
         //mount logger
         this.app.use(morgan_1.default("dev"));
