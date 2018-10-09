@@ -1,6 +1,7 @@
 
 import { NextFunction, Request, Response, Router } from "express";
 import { BaseRoute } from "../routes/routes.js";
+import Dbhandler = require("../src/dbhandler");
 
 
 /**
@@ -54,6 +55,8 @@ export class IndexRoute extends BaseRoute {
         let options: Object = {
             "message": "Welcome to the UVic 350!"
         };
+
+        let cursor = Dbhandler.connect();
 
         //render template
         this.render(req, res, "index", options);

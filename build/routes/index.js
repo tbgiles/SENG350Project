@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var routes_js_1 = require("../routes/routes.js");
+var Dbhandler = require("../src/dbhandler");
 /**
  * / route
  *
@@ -61,6 +62,7 @@ var IndexRoute = /** @class */ (function (_super) {
         var options = {
             "message": "Welcome to the UVic 350!"
         };
+        var cursor = Dbhandler.connect();
         //render template
         this.render(req, res, "index", options);
     };
