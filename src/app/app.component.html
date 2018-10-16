@@ -1,5 +1,12 @@
 <h1>SENG350Project</h1>
-<p>test</p>
-<ul>
-  <li *ngFor="let user of users">User: {{ user.name }}</li>
+<ul class="users">
+  <li *ngFor="let user of users"
+    [class.selected]="user === selectedUser"
+    (click)="onSelect(user)">
+    <span class="badge">{{ user.userId }}</span>{{ user.name }}</li>
 </ul>
+
+<div *ngIf="selectedUser">
+  <h2>{{selectedUser.name | uppercase}} Selected</h2>
+  <button mat-button>Log in</button>
+</div>

@@ -42,4 +42,25 @@ router.get('/users', (req, res) => {
   });
 });
 
+// Get single user
+// TODO: Make userId a unique value for each document
+router.get('/user/:userId', (req, res) => {
+  connection((db) => {
+    db.collection('users')
+      .find({
+        'userId': Number(req.params.userId)
+      })
+      .toArray()
+      .then((user) => {
+        response.data = user[0]; // We are assuming there is no duplicate data.
+        res.json(response);
+      })
+      .catch((err) => {
+        sendError(err, res);
+      });
+  });
+});
+
+// TODO: functionality for adding/deleting users.
+
 module.exports = router;

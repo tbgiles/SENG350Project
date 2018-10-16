@@ -15,4 +15,8 @@ export class DataService {
   getUsers() {
     return this._http.get("/api/users")
   }
+
+  getUser(userId: number) {
+    return this._http.get("/api/user/" + String(userId));
+  }
 }
