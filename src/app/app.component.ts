@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { DataService } from './data.service';
+import { DataService } from './_services/data.service';
+import { AuthService } from './_services/auth.service';
 import { User } from './user'
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,19 +14,7 @@ export class AppComponent {
   users: Array<any>;
   selectedUser: User
 
-  constructor(private _dataService: DataService) {
-    this.getUsers();
+  constructor() {
   }
 
-  // Retrieve a list of all users from the database
-  getUsers(): void {
-    this._dataService.getUsers()
-      .subscribe(res => {
-        this.users = res.json().data;
-      });
-  }
-
-  onSelect(user: User): void {
-    this.selectedUser = user;
-  }
 }

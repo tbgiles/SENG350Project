@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 const http = require("http");
 const app = express();
+const jwt = require('jsonwebtoken');
 
 // API file for interacting with MongoDB
 const api = require("./server/routes/api");
