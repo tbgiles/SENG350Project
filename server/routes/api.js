@@ -3,7 +3,7 @@ const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
-// Connect
+// Connect to the database to make a data request
 const connection = (closure) => {
   return MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true }, (err, client) => {
     if (err) return console.log(err);
@@ -24,7 +24,7 @@ let response = {
   status: 200,
   data: [],
   message: null
-};
+}
 
 // Get users
 router.get('/users', (req, res) => {
@@ -63,8 +63,33 @@ router.get('/user/:userId', (req, res) => {
 
 // Authenticate a user, return a JWT
 router.post('/auth', (req, res) => {
-  console.dir(req.body)
+  console.dir(req.body);
 });
 // TODO: functionality for adding/deleting users.
+
+router.get('/projects', (req, res) =>{
+  console.dir(req.body);
+});
+
+router.get('/projects', (req, res)=>{
+  connection((db) => {
+    db.collection('projects')
+      .find({
+        'projectID': Number(req.params.projectID)
+      })
+      .toArray()
+      .then((useCases) => {
+        response.data = useCases; // We are assuming there is no duplicate data.
+        res.json(response);
+      })
+      .catch((err) => {
+        sendError(err, res);
+      });
+  });
+});
+
+router.get('/projects/:projectID',(req, res)=>{
+  console.log("Posting" + req.params.projectID);
+});
 
 module.exports = router;
