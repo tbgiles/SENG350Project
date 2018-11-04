@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../_services/data.service';
 import { AuthService } from '../_services/auth.service';
-import { User } from '../user'
+import { User } from '../user';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ import { User } from '../user'
 export class LoginComponent implements OnInit {
 
   users: Array<any>;
-  selectedUser: User
+  selectedUser: User;
   ngOnInit() {
   }
 

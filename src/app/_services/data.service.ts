@@ -8,15 +8,24 @@ import { map } from 'rxjs/operators';
 })
 export class DataService {
 
-  result:any;
+  result: any;
 
   constructor(private _http: Http) { }
 
   getUsers() {
-    return this._http.get("/api/users")
+    return this._http.get('/api/users');
   }
 
   getUser(userId: number) {
-    return this._http.get("/api/user/" + String(userId));
+    return this._http.get('/api/user/' + String(userId));
+  }
+
+  getProjects() {
+    return this._http.get('/api/projects');
+  }
+
+  getProject(projectId: number) {
+    return this._http.get('/api/projects/' + String(projectId));
   }
 }
+

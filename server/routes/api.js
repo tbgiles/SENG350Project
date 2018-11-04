@@ -61,17 +61,48 @@ router.get('/user/:userId', (req, res) => {
   });
 });
 
+// Edit a single user
+// TODO: Make userId a unique value for each document
+router.get('/user/edit/:userId', (req, res) => {
+  connection((db) => {
+    db.collection('users')
+      .find({
+        'userId': Number(req.params.userId)
+      })
+      .toArray()
+      .then((user) => {
+        response.data = user[0]; // We are assuming there is no duplicate data.
+        res.json(response);
+      })
+      .catch((err) => {
+        sendError(err, res);
+      });
+  });
+});
+
 // Authenticate a user, return a JWT
 router.post('/auth', (req, res) => {
   console.dir(req.body);
 });
 // TODO: functionality for adding/deleting users.
 
-router.get('/projects', (req, res) =>{
-  console.dir(req.body);
+router.get('/projects', (req, res)=>{
+  connection((db) => {
+    db.collection('projects')
+      .find()
+      .toArray()
+      .then((useCases) => {
+        response.data = useCases; // We are assuming there is no duplicate data.
+        console.log(useCases);
+        res.json(response);
+      })
+      .catch((err) => {
+        sendError(err, res);
+      });
+  });
 });
 
-router.get('/projects', (req, res)=>{
+router.get('/projects/:projectID',(req, res)=>{
   connection((db) => {
     db.collection('projects')
       .find({
@@ -86,10 +117,6 @@ router.get('/projects', (req, res)=>{
         sendError(err, res);
       });
   });
-});
-
-router.get('/projects/:projectID',(req, res)=>{
-  console.log("Posting" + req.params.projectID);
 });
 
 module.exports = router;

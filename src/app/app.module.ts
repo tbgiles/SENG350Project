@@ -7,16 +7,19 @@ import { HttpModule } from '@angular/http';
 import { DataService } from './_services/data.service';
 import { AuthService } from './_services/auth.service';
 import { LoginComponent } from './login/login.component';
+import { ProjecthomeComponent } from './projecthome/projecthome.component';
 
 
 const appRoutes: Routes = [
-  {path: 'login', component: LoginComponent}
-]
+  {path: 'login', component: LoginComponent},
+  {path: 'projects', component: ProjecthomeComponent}
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ProjecthomeComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
