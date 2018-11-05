@@ -1,0 +1,18 @@
+<p>
+  projecthome works!
+</p>
+<div class="project-container">
+  My Available Projects
+  <ul class="project">
+    <li *ngFor="let project of projects"
+        [class.selected]="project === selectedProject"
+        (click)="onSelect(project)">
+      <span class="badge">{{ project.projectID }}</span>{{ project.title }}</li>
+    <li (click)="createNewProject()"> Create a New Project</li>
+  </ul>
+</div>
+<div *ngIf="selectedProject">
+  <h2>{{selectedProject.title | uppercase}} Selected</h2>
+  <button mat-button>View Project</button>
+</div>
+
