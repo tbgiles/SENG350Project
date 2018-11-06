@@ -80,11 +80,6 @@ router.get('/user/edit/:userId', (req, res) => {
   });
 });
 
-// Authenticate a user, return a JWT
-router.post('/auth', (req, res) => {
-  console.dir(req.body);
-});
-// TODO: functionality for adding/deleting users.
 
 router.get('/projects', (req, res)=>{
   connection((db) => {

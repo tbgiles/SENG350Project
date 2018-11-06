@@ -9,7 +9,7 @@ import { Project } from '../project';
   templateUrl: './projecthome.component.html',
   styleUrls: ['./projecthome.component.css']
 })
-export class ProjecthomeComponent implements OnInit {
+export class ProjectHomeComponent implements OnInit {
 
   projects: Array<Project>;
   selectedProject: Project;

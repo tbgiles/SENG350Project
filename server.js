@@ -1,10 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 const path = require("path");
 const http = require("http");
 const app = express();
 const jwt = require('jsonwebtoken');
+const expressJwt= require('express-jwt');
+const fs = require('fs');
 
 // API file for interacting with MongoDB
 const api = require("./server/routes/api");
@@ -19,8 +20,31 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // API location
 app.use('/api', api);
 
+// Authentication
+const RSA_PRIVATE_KEY = fs.readFileSync('./private.key', 'utf-8');
+const RSA_PUBLIC_KEY = fs.readFileSync('./public.key', 'utf-8');
+
+// This function is called when AuthService calls the '/auth' path.
+const loginRoute = (req, res) => {
+  const userId = req.body.userId;
+  const name = req.body.name;
+  const jwtBearerToken = jwt.sign({
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+    userId: String(userId)
+  }, RSA_PRIVATE_KEY, {
+    algorithm: 'RS256'
+  })
+  res.status(200).json({
+    idToken: jwtBearerToken,
+    expiresIn: "1",
+    userId: userId,
+    name: name
+  });
+}
+app.route('/auth').post(loginRoute);
+
 // Send all other requests to the Angular app
-app.get('*', (req, res) => {
+app.route('*').get((req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 

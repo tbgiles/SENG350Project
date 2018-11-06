@@ -1,7 +1,19 @@
 <div class="header">
-  header goes here<br/>
+  <div class="header-text" *ngIf="currentUser">
+    <span>Welcome {{ currentUser }}!  </span>
+    <button mat-button (click)="logout()">Log out</button>
+  </div>
+  <div class="header-text"
+    *ngIf="!currentUser">
+    <span class="header-text" >Please sign in below.</span>
+  </div>
 </div>
-<router-outlet></router-outlet>
+<!-- The router-outlet has (activate) and (deactivate) listeners
+  to detect when someone logs in or logs out. This allows the header
+  and logout button to update without the need for refreshing.
+</header> -->
+<router-outlet (activate)="getCurrentUser()"
+  (deactivate)="getCurrentUser()"></router-outlet>
 <div class="footer">
   footer goes here<br/>
 </div>
