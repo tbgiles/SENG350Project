@@ -8,7 +8,7 @@
         [class.selected]="project === selectedProject"
         (click)="onSelect(project)">
       <span class="badge">{{ project.projectID }}</span>{{ project.title }}</li>
-    <li (click)="createNewProject()"> Create a New Project</li>
+    <li (click)="projectCreateModal.open()"> Create a New Project</li>
   </ul>
 </div>
 <div *ngIf="selectedProject">
@@ -16,3 +16,37 @@
   <button mat-button>View Project</button>
 </div>
 
+<!-- <button (click)="htmlInsideModal.open()">Raw HTML inside modal</button> -->
+<modal #projectCreateModal class="projectCreateModal">
+  <ng-template #modalHeader><h2>Create Project</h2></ng-template>
+  <ng-template #modalBody>
+    <p>Forms should go here</p>
+    <form>
+      First name:<br>
+      <input type="text" name="firstname"><br>
+      Last name:<br>
+      <input type="text" name="lastname"><br>
+      First name:<br>
+      <input type="text" name="firstname"><br>
+      Last name:<br>
+      <input type="text" name="lastname"><br>
+      First name:<br>
+      <input type="text" name="firstname"><br>
+      Last name:<br>
+      <input type="text" name="lastname"><br>
+      First name:<br>
+      <input type="text" name="firstname"><br>
+      Last name:<br>
+      <input type="text" name="lastname"><br>
+      First name:<br>
+      <input type="text" name="firstname"><br>
+      Last name:<br>
+      <input type="text" name="lastname"><br>
+      First name:<br>
+      <input type="text" name="firstname"><br>
+      Last name:<br>
+      <input type="text" name="lastname">
+
+    </form>
+  </ng-template>
+</modal>

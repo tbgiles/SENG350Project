@@ -11,6 +11,7 @@ import { DataService } from './_services/data.service';
 import { AuthService } from './_services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { ProjectHomeComponent } from './projecthome/projecthome.component';
+import { ModalModule } from 'angular-custom-modal';
 
 
 const appRoutes: Routes = [
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
-    HttpModule
+    HttpModule,
+    ModalModule
   ],
   exports: [RouterModule],
   providers: [

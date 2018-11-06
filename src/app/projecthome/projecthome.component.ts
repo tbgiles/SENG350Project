@@ -15,6 +15,7 @@ export class ProjectHomeComponent implements OnInit {
   selectedProject: Project;
 
   constructor(private _dataService: DataService) {
+    console.log("FUCK");
     this.getProjects();
   }
 
@@ -33,8 +34,11 @@ export class ProjectHomeComponent implements OnInit {
   }
 
   createNewProject() {
+
+    // this._modalService.open();
     // Create a modal here to fill in data
     // Submit filled in fields to DB
+
   }
 
 }
