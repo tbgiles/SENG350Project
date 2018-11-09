@@ -12,6 +12,7 @@ import { AuthService } from './_services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { ProjectHomeComponent } from './projecthome/projecthome.component';
 import { ModalModule } from 'angular-custom-modal';
+import { ProjectComponent } from './project/project.component';
 
 
 const appRoutes: Routes = [
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    ProjectHomeComponent
+    ProjectHomeComponent,
+    ProjectComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

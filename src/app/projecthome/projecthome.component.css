@@ -56,15 +56,3 @@
   margin-right: .8em;
   border-radius: 4px 0 0 4px;
 }
-
-
-.projectCreateModal .modal-dialog{
-  background-color: gray;
-  float:right;
-}
-
-.projectCreateModal h2 {
-  display: inline-block;
-  background-color: gray;
-  padding-right: 30px;
-}
