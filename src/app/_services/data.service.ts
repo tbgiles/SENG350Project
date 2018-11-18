@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators';
+import { Project } from '../project';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,11 @@ export class DataService {
     return this._http.get('/api/projects');
   }
 
-  getProject(projectId: number) {
-    return this._http.get('/api/projects/' + String(projectId));
+  getProject(projectId: string) {
+    return this._http.get('/api/projects/' + projectId);
+  }
+
+  getUseCase(useCaseId: string){
+    return this._http.get('/api/projects/usecase/' + useCaseId);
   }
 }
-

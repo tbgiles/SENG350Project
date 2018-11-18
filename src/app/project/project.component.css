@@ -1,4 +1,4 @@
-.project-container{
+.usecase-container{
   width: fit-content;
   height: fit-content;
   background-color: lightgray;
@@ -12,13 +12,13 @@
   color: blue;
 }
 
-.project {
+.usecase {
   margin: 0 0 2em 0;
   list-style-type: none;
   padding: 0;
   width: 15em;
 }
-.project li {
+.usecase li {
   cursor: pointer;
   position: relative;
   left: 0;
@@ -29,20 +29,20 @@
   border-radius: 4px;
   text-align: left;
 }
-.project li.selected:hover {
+.usecase li.selected:hover {
   background-color: #BBD8DC !important;
   color: white;
 }
-.project li:hover {
+.usecase li:hover {
   color: #607D8B;
   background-color: #DDD;
   left: .1em;
 }
-.project .text {
+.usecase .text {
   position: relative;
   top: -3px;
 }
-.project .badge {
+.usecase .badge {
   display: inline-block;
   font-size: small;
   color: white;

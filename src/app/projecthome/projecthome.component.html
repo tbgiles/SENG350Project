@@ -8,11 +8,24 @@
         [class.selected]="project === selectedProject"
         (click)="onSelect(project)">
       <span class="badge">{{ project.projectID }}</span>{{ project.title }}</li>
-    <li (click)="createNewProject()"> Create a New Project</li>
+    <li (click)="projectCreateModal.open()"> Create a New Project</li>
   </ul>
 </div>
 <div *ngIf="selectedProject">
   <h2>{{selectedProject.title | uppercase}} Selected</h2>
-  <button mat-button>View Project</button>
+  <button mat-button (click)="openProject()">View Project</button>
 </div>
 
+<!-- <button (click)="htmlInsideModal.open()">Raw HTML inside modal</button> -->
+<modal #projectCreateModal class="projectCreateModal">
+  <ng-template #modalHeader><h2>Create Project</h2></ng-template>
+  <ng-template #modalBody>
+    <p>Fill in Related Use Case Information</p>
+    <form id="newProjectForm">
+      Project #:<br>
+      <input type="text" name="projectnum"><br>
+      Title:<br>
+      <input type="text" name="title"><br>
+    </form>
+  </ng-template>
+</modal>

@@ -1,4 +1,4 @@
-export class Project {
+export class UseCase {
   _id: number;
   title: string;
   projectID: any;
