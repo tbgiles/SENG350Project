@@ -40,6 +40,7 @@ export class ProjectComponent implements OnInit {
       .subscribe(res => {
         let json = res.json();
         this.useCases.push(json.data);
+        console.log(json.data);
       });
     });
   }
@@ -49,6 +50,10 @@ export class ProjectComponent implements OnInit {
 
   onSelect(usecase: UseCase) {
     this.selectedUseCase = usecase;
+  }
+
+  createUseCase(){
+    
   }
 
 }
