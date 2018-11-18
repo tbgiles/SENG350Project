@@ -88,7 +88,7 @@ router.get('/projects', (req, res)=>{
       .toArray()
       .then((useCases) => {
         response.data = useCases; // We are assuming there is no duplicate data.
-        console.log(useCases);
+        //console.log(useCases);
         res.json(response);
       })
       .catch((err) => {
@@ -99,18 +99,31 @@ router.get('/projects', (req, res)=>{
 
 router.get('/projects/:projectID',(req, res)=>{
   connection((db) => {
-    db.collection('projects')
-      .find({
-        'projectID': Number(req.params.projectID)
-      })
-      .toArray()
-      .then((useCases) => {
-        response.data = useCases; // We are assuming there is no duplicate data.
-        res.json(response);
-      })
-      .catch((err) => {
-        sendError(err, res);
-      });
+    db.collection('projects').find(ObjectID(req.params.projectID))
+    .toArray()
+    .then((project) => {
+      res.setHeader('Content-Type', 'application/json');
+      response.data = project[0]; // We are assuming there is no duplicate data.
+      res.json(response);
+    })
+    .catch((err) => {
+      sendError(err, res);
+    });
+  });
+});
+
+router.get('/projects/usecase/:useCaseID',(req, res)=>{
+  connection((db) => {
+    db.collection('usecases').find(ObjectID(req.params.projectID))
+    .toArray()
+    .then((project) => {
+      res.setHeader('Content-Type', 'application/json');
+      response.data = project[0]; // We are assuming there is no duplicate data.
+      res.json(response);
+    })
+    .catch((err) => {
+      sendError(err, res);
+    });
   });
 });
 

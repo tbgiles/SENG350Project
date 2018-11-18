@@ -13,7 +13,7 @@
 </div>
 <div *ngIf="selectedProject">
   <h2>{{selectedProject.title | uppercase}} Selected</h2>
-  <button mat-button>View Project</button>
+  <button mat-button (click)="openProject()">View Project</button>
 </div>
 
 <!-- <button (click)="htmlInsideModal.open()">Raw HTML inside modal</button> -->
@@ -22,51 +22,10 @@
   <ng-template #modalBody>
     <p>Fill in Related Use Case Information</p>
     <form id="newProjectForm">
-      Use Case #:<br>
-      <input type="text" name="firstname"><br>
-      Goal in Context:<br>
-      <textarea name="projectGoal" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Scope & Level:<br>
-      <input type="text" name="firstname"><br>
-      Preconditions:<br>
-      <textarea name="projectPreconditions" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Success End Condition:<br>
-      <textarea name="projectSuccessEnd" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Failed End Condition:<br>
-      <textarea name="projectFailEnd" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Primary Actors:<br>
-      <textarea name="projectActors" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Secondary Actors:<br>
-      <textarea name="projectSecondaryActors" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Trigger:<br>
-      <textarea name="projectTrigger" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Desription:<br>
-      <textarea name="projectDescription" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Extensions:<br>
-      <textarea name="projectExtensions" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Sub Variations:<br>
-      <textarea name="projectSubvariations" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Related Information:<br>
-      <textarea name="projectInfo" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Priority:<br>
-      <input type="text" name="projectPriority"><br>
-      Performance:<br>
-      <textarea name="projectPerformanceQualities" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Frequency:<br>
-      <input type="text" name="firstname"><br>
-      Channels to Actors:<br>
-      <input type="text" name="firstname"><br>
-      Open Issues:<br>
-      <textarea name="projectOpenIssues" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Due Date:<br>
-      <input type="text" name="firstname"><br>
-      Managerial Information:<br>
-      <textarea name="projectManagerial" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
-      Superordinates:<br>
-      <input type="text" name="firstname"><br>
-      Subordinates:<br>
-      <input type="text" name="firstname">
-
+      Project #:<br>
+      <input type="text" name="projectnum"><br>
+      Title:<br>
+      <input type="text" name="title"><br>
     </form>
   </ng-template>
 </modal>

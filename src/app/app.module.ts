@@ -17,6 +17,7 @@ import { ProjectComponent } from './project/project.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'project', component:ProjectComponent, canActivate: [AuthGuard] },
   {path: '', component: ProjectHomeComponent, canActivate: [AuthGuard] }
 ];
 
