@@ -26,18 +26,18 @@ const RSA_PUBLIC_KEY = fs.readFileSync('./public.key', 'utf-8');
 
 // This function is called when AuthService calls the '/auth' path.
 const loginRoute = (req, res) => {
-  const userId = req.body.userId;
+  const _id = req.body._id;
   const name = req.body.name;
   const jwtBearerToken = jwt.sign({
     exp: Math.floor(Date.now() / 1000) + (60 * 60),
-    userId: String(userId)
+    _id: _id
   }, RSA_PRIVATE_KEY, {
     algorithm: 'RS256'
   })
   res.status(200).json({
     idToken: jwtBearerToken,
     expiresIn: "1",
-    userId: userId,
+    _id: _id,
     name: name
   });
 }

@@ -9,7 +9,7 @@ import { map, tap, shareReplay } from 'rxjs/operators';
 
 /*
   This service has a lot of functionality, so be sure to poke around.
-  It logs a user in after being passed a userId and name from the LoginComponent.
+  It logs a user in after being passed a _id and name from the LoginComponent.
   It then passes this on to the '/auth' route definied in the root file 'server.js'.
   The server passes back a JWT, which we will later use for API-side authentication.
   For now, everything is stored in the browser's 'Storage', which keeps track of the
@@ -28,8 +28,8 @@ export class AuthService {
       })
   }
 
-  login(userId: number, name: string) {
-    return this._http.post('/auth', {userId, name})
+  login(_id: string, name: string) {
+    return this._http.post('/auth', {_id, name})
       .pipe(tap(res => this.setSession(res)) , shareReplay());
   }
 
@@ -40,7 +40,7 @@ export class AuthService {
     // Store JWT and other details in local storage
     localStorage.setItem('idToken', result.idToken);
     localStorage.setItem('expiresAt', JSON.stringify(expiresAt.valueOf()));
-    localStorage.setItem('userId', result.userId)
+    localStorage.setItem('_id', result._id)
     localStorage.setItem('name', result.name)
   }
 
@@ -48,7 +48,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('idToken');
     localStorage.removeItem('expiresAt');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('_id');
     localStorage.removeItem('name');
   }
 

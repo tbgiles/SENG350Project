@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   // Heavily tied to both AuthService and the root 'server.js' file.
   login() {
-    this._authService.login(this.selectedUser.userId, this.selectedUser.name)
+    this._authService.login(this.selectedUser._id, this.selectedUser.name)
       .subscribe( () => {
         console.log(`Successfully logged in as ${this.selectedUser.name}`);
         this.logged.emit(true);
