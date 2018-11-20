@@ -29,6 +29,6 @@ export class DataService {
   }
 
   getUseCase(useCaseId: string){
-    return this._http.get('/api/projects/usecase/' + useCaseId);
+    return this._http.get('/api/usecase/' + useCaseId);
   }
 }

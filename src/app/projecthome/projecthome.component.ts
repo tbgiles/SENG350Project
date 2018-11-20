@@ -46,7 +46,7 @@ export class ProjectHomeComponent implements OnInit {
   openProject(){
     let projectToOpen = this.selectedProject;
     sessionStorage.currentProject = projectToOpen._id;
-    this.router.navigateByUrl('/project');
+    this.router.navigateByUrl(`/project/${this.selectedProject._id}`);
   }
 
 }

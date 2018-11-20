@@ -33,6 +33,7 @@ router.get('/users', (req, res) => {
       .find()
       .toArray()
       .then((users) => {
+        res.setHeader('Content-Type', 'application/json');
         response.data = users;
         res.json(response);
       })
@@ -52,6 +53,7 @@ router.get('/user/:userId', (req, res) => {
       })
       .toArray()
       .then((user) => {
+        res.setHeader('Content-Type', 'application/json');
         response.data = user[0]; // We are assuming there is no duplicate data.
         res.json(response);
       })
@@ -71,6 +73,7 @@ router.get('/user/edit/:userId', (req, res) => {
       })
       .toArray()
       .then((user) => {
+        res.setHeader('Content-Type', 'application/json');
         response.data = user[0]; // We are assuming there is no duplicate data.
         res.json(response);
       })
@@ -86,8 +89,9 @@ router.get('/projects', (req, res)=>{
     db.collection('projects')
       .find()
       .toArray()
-      .then((useCases) => {
-        response.data = useCases; // We are assuming there is no duplicate data.
+      .then((projects) => {
+        res.setHeader('Content-Type', 'application/json');
+        response.data = projects; // We are assuming there is no duplicate data.
         //console.log(useCases);
         res.json(response);
       })
@@ -99,11 +103,12 @@ router.get('/projects', (req, res)=>{
 
 router.get('/projects/:projectID',(req, res)=>{
   connection((db) => {
-    db.collection('projects').find(ObjectID(req.params.projectID))
-    .toArray()
+    console.dir(req.params.projectID);
+    db.collection('projects').findOne({_id: ObjectID(req.params.projectID)})
     .then((project) => {
       res.setHeader('Content-Type', 'application/json');
-      response.data = project[0]; // We are assuming there is no duplicate data.
+      console.dir(project);
+      response.data = project; // We are assuming there is no duplicate data.
       res.json(response);
     })
     .catch((err) => {
@@ -112,13 +117,13 @@ router.get('/projects/:projectID',(req, res)=>{
   });
 });
 
-router.get('/projects/usecase/:useCaseID',(req, res)=>{
+router.get('/usecase/:useCaseID',(req, res)=>{
   connection((db) => {
-    db.collection('usecases').find(ObjectID(req.params.projectID))
+    db.collection('usecases').findOne({_id: ObjectID(req.params.projectID)})
     .toArray()
-    .then((project) => {
+    .then((useCase) => {
       res.setHeader('Content-Type', 'application/json');
-      response.data = project[0]; // We are assuming there is no duplicate data.
+      response.data = useCase;
       res.json(response);
     })
     .catch((err) => {

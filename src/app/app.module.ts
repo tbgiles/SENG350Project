@@ -14,11 +14,27 @@ import { ProjectHomeComponent } from './projecthome/projecthome.component';
 import { ModalModule } from 'angular-custom-modal';
 import { ProjectComponent } from './project/project.component';
 
+import { ProjectResolver } from './project/project-resolver.service';
+
 
 const appRoutes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'project', component:ProjectComponent, canActivate: [AuthGuard] },
-  {path: '', component: ProjectHomeComponent, canActivate: [AuthGuard] }
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'project/:projectID',
+    component:ProjectComponent,
+    canActivate: [AuthGuard],
+    resolve: {
+      project: ProjectResolver
+    }
+  },
+  {
+    path: '',
+    component: ProjectHomeComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
@@ -42,7 +58,8 @@ const appRoutes: Routes = [
       multi: true
     },
     DataService,
-    AuthService
+    AuthService,
+    ProjectResolver
   ],
   bootstrap: [AppComponent]
 })

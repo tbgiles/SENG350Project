@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../_services/data.service';
 import { AuthService } from '../_services/auth.service';
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { Project } from '../project';
-import { UseCase } from '../usecase'
+import { UseCase } from '../usecase';
+import { ProjectResolver } from './project-resolver.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-project',
@@ -16,21 +18,26 @@ export class ProjectComponent implements OnInit {
   useCaseId: Array<any>;
   useCases: Array<UseCase>;
   selectedUseCase: UseCase;
+  projectID: any
 
+  constructor(private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
 
-  constructor(private _dataService: DataService, private router: Router) {
-    this.retProjectInfo();
+    this.actr.data.subscribe(res => {
+      this.projectID = res.project
+      this.retProjectInfo();
+    });
   }
 
+
+// TODO: Fix the usecase issue
+
   retProjectInfo(){
-    let projectDbId = sessionStorage.getItem("currentProject");
-    this._dataService.getProject(projectDbId)
+    this._dataService.getProject(this.projectID)
     .subscribe(res => {
       let json = res.json();
       this.project = json.data;
       this.useCaseId = this.project.useCases;
-      console.log(this.project);
-      this.retProjectUseCases();
+  //    this.retProjectUseCases();
     });
   }
 
