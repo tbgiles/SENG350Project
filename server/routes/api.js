@@ -120,7 +120,6 @@ router.get('/projects/:projectID',(req, res)=>{
 router.get('/usecase/:useCaseID',(req, res)=>{
   connection((db) => {
     db.collection('usecases').findOne({_id: ObjectID(req.params.projectID)})
-    .toArray()
     .then((useCase) => {
       res.setHeader('Content-Type', 'application/json');
       response.data = useCase;

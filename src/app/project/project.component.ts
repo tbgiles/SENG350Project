@@ -37,7 +37,7 @@ export class ProjectComponent implements OnInit {
       let json = res.json();
       this.project = json.data;
       this.useCaseId = this.project.useCases;
-  //    this.retProjectUseCases();
+      this.retProjectUseCases();
     });
   }
 
