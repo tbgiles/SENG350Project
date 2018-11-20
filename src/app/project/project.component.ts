@@ -58,4 +58,10 @@ export class ProjectComponent implements OnInit {
     this.selectedUseCase = usecase;
   }
 
+  submitNewUseCase(){
+    var newUseCase = document.getElementById("useCaseForm");
+    var object = new UseCase;
+    console.log(newUseCase);
+  }
+
 }

@@ -21,9 +21,9 @@
     <p>Fill in Related Use Case Information</p>
     <form id="useCaseForm">
       Use Case #:<br>
-      <input type="text" name="UseCaseNum"><br>
+      <input type="text" name="UseCaseNum" id="useCaseNum"><br>
       Goal in Context:<br>
-      <textarea name="projectGoal" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
+      <textarea name="projectGoal" id="projectGoal" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
       Scope & Level:<br>
       <input type="text" name="scope"><br>
       Preconditions:<br>
@@ -63,8 +63,8 @@
       Superordinates:<br>
       <input type="text" name="super"><br>
       Subordinates:<br>
-      <input type="text" name="sub">
-
+      <input type="text" name="sub"><br>
+      <button mat-button (click)="submitNewUseCase()">Submit</button>
     </form>
   </ng-template>
 </modal>
