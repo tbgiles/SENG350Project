@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { map, tap, shareReplay } from 'rxjs/operators';
+import { response } from '../response';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +20,7 @@ import { map, tap, shareReplay } from 'rxjs/operators';
 */
 export class AuthService {
 
-  key: string;
-
-  constructor(private _http: Http) {
-    this._http.get('/authpub',)
-      .subscribe((res) => {
-        this.key = res.json().data
-      })
-  }
+  constructor(private _http: HttpClient) { }
 
   login(_id: string, name: string) {
     return this._http.post('/auth', {_id, name})
@@ -35,7 +29,7 @@ export class AuthService {
 
   private setSession(authResult) {
     // Parse the result from the server
-    const result = authResult.json();
+    const result = authResult;
     const expiresAt = moment().add(result.expiresIn,'hour');
     // Store JWT and other details in local storage
     localStorage.setItem('idToken', result.idToken);

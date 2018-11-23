@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+//import { Http, Headers, RequestOptions } from '@angular/http';
+import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/first';
+import { first } from 'rxjs/operators';
+import { pipe } from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
+
 import { Project } from '../project';
 import { UseCase } from '../usecase';
 
@@ -11,7 +19,7 @@ export class DataService {
 
   result: any;
 
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
 
   getUsers() {
     return this._http.get('/api/users');
@@ -32,8 +40,8 @@ export class DataService {
   getUseCase(useCaseId: string){
     return this._http.get('/api/usecase/' + useCaseId);
   }
-  
+
   submitUseCase(useCase: UseCase){
-    this._http.post('/api/submitusecase', useCase);
+    this._http.post<UseCase>('/api/submit/usecase', useCase).subscribe((obj)=>{console.log(obj)});
   }
 }

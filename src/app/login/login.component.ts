@@ -3,6 +3,7 @@ import { DataService } from '../_services/data.service';
 import { AuthService } from '../_services/auth.service';
 import { User } from '../user';
 import { Router } from '@angular/router'
+import { response } from '../response';
 
 @Component({
   selector: 'app-login',
@@ -26,8 +27,8 @@ export class LoginComponent implements OnInit {
   // Retrieve a list of all users from the database.
   getUsers(): void {
     this._dataService.getUsers()
-      .subscribe(res => {
-        this.users = res.json().data;
+      .subscribe((res: response) => {
+        this.users = res.data;
       });
   }
 

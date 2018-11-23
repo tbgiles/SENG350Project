@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+//import { HttpModule } from '@angular/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './_guards/auth.guard';
 
 import { AppComponent } from './app.component';
-import { HttpModule } from '@angular/http';
 import { DataService } from './_services/data.service';
 import { AuthService } from './_services/auth.service';
 import { LoginComponent } from './login/login.component';
@@ -47,7 +47,8 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
-    HttpModule,
+//    HttpModule,
+    HttpClientModule,
     ModalModule
   ],
   exports: [RouterModule],
