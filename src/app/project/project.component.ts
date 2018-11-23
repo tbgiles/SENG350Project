@@ -60,8 +60,36 @@ export class ProjectComponent implements OnInit {
 
   submitNewUseCase(){
     var newUseCase = document.getElementById("useCaseForm");
-    var object = new UseCase;
-    console.log(newUseCase);
+    var object = new UseCase();
+    object.title = newUseCase.title.value;
+    object.goal = newUseCase.goal.value;
+    object.scope = newUseCase.scope.value;
+    object.level = newUseCase.level.value;
+    object.preconditions = newUseCase.preconditions.value;
+    object.successEndCondition = newUseCase.successEndCondition.value;
+    object.failedEndCondition = newUseCase.failedEndCondition.value;
+    object.primaryActor = newUseCase.primaryActor.value;
+    object.secondaryActors = newUseCase.secondaryActors.value;
+    object.trigger = newUseCase.trigger.value;
+    object.description
+    console.log(this.projectID);
   }
+  /*export class UseCase {
+    _id: string;
+    project: string; //ObjectID of the project
+    title: string;
+    goal: string;
+    scope: string;
+    level: string;
+    preconditions: Array<string>;
+    successEndCondition: string;
+    failedEndCondition: string;
+    primaryActor: string;
+    secondaryActors: Array<string>;
+    trigger: string;
+    description: Array<string>;
+    extensions: Array<string>;
+    subVariations: Array<string>;
+  }*/
 
 }
