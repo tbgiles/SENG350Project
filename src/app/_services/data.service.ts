@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 //import { Http, Headers, RequestOptions } from '@angular/http';
-import { from } from 'rxjs';
-import { map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/first';
-import { first } from 'rxjs/operators';
-import { pipe } from 'rxjs/Rx';
-import {Observable} from 'rxjs/Rx';
 
 import { Project } from '../project';
 import { UseCase } from '../usecase';

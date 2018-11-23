@@ -25,8 +25,10 @@ export class ProjectComponent implements OnInit {
 
     this.actr.data.subscribe(res => {
       this.projectID = res.project;
+      this.useCases = new Array();
       this.retProjectInfo();
     });
+
   }
 
 
