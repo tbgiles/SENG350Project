@@ -4,6 +4,7 @@ import { AuthService } from '../_services/auth.service';
 import { User } from '../user';
 import { Project } from '../project';
 import { Router } from '@angular/router'
+import { response } from '../response';
 
 @Component({
   selector: 'app-projecthome',
@@ -26,8 +27,8 @@ export class ProjectHomeComponent implements OnInit {
 
   getProjects(): void {
     this._dataService.getProjects()
-      .subscribe(res => {
-        this.projects = res.json().data;
+      .subscribe((res: response) => {
+        this.projects = res.data;
       });
   }
 

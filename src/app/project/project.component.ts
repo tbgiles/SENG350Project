@@ -6,6 +6,7 @@ import { Project } from '../project';
 import { UseCase } from '../usecase';
 import { ProjectResolver } from './project-resolver.service';
 import { map } from 'rxjs/operators';
+import { response } from '../response';
 
 @Component({
   selector: 'app-project',
@@ -33,9 +34,8 @@ export class ProjectComponent implements OnInit {
 
   retProjectInfo(){
     this._dataService.getProject(this.projectID)
-    .subscribe(res => {
-      let json = res.json();
-      this.project = json.data;
+    .subscribe((res: response) => {
+      this.project = res.data;
       this.useCaseIds = this.project.useCases;
       this.retProjectUseCases();
     });
@@ -44,9 +44,8 @@ export class ProjectComponent implements OnInit {
   retProjectUseCases(){
     this.useCaseIds.forEach(useCase => {
       this._dataService.getUseCase(useCase._id)
-      .subscribe(res => {
-        let json = res.json();
-        this.useCases.push(json.data);
+      .subscribe((res: response) => {
+        this.useCases.push(res.data);
       });
     });
   }

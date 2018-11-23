@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
+const jwt = require('jsonwebtoken');
 
 // Connect to the database to make a data request
 const connection = (closure) => {
@@ -84,6 +85,7 @@ router.get('/user/edit/:userId', (req, res) => {
 });
 
 
+// Get all projects a user is associated with
 router.get('/projects', (req, res)=>{
   connection((db) => {
     db.collection('projects')
@@ -91,8 +93,7 @@ router.get('/projects', (req, res)=>{
       .toArray()
       .then((projects) => {
         res.setHeader('Content-Type', 'application/json');
-        response.data = projects; // We are assuming there is no duplicate data.
-        //console.log(useCases);
+        response.data = projects;
         res.json(response);
       })
       .catch((err) => {
@@ -103,12 +104,10 @@ router.get('/projects', (req, res)=>{
 
 router.get('/projects/:projectID',(req, res)=>{
   connection((db) => {
-    console.dir(req.params.projectID);
     db.collection('projects').findOne({_id: ObjectID(req.params.projectID)})
     .then((project) => {
       res.setHeader('Content-Type', 'application/json');
-      console.dir(project);
-      response.data = project; // We are assuming there is no duplicate data.
+      response.data = project;
       res.json(response);
     })
     .catch((err) => {
@@ -117,6 +116,7 @@ router.get('/projects/:projectID',(req, res)=>{
   });
 });
 
+// Get a single use case
 router.get('/usecase/:useCaseID',(req, res)=>{
   connection((db) => {
     db.collection('usecases').findOne({_id: ObjectID(req.params.projectID)})
