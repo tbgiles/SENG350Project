@@ -119,6 +119,37 @@ router.get('/projects', (req, res)=>{
   });
 });
 
+// This is an untested endpoint that retrieves all use cases a use has access to.
+// This is for the requirement of having an overview page of usecases.
+router.get('/usecases', (req, res)=>{
+  // Validate the user's identity using their JWT
+  const token = req.headers.authorization;
+  let userID = "";
+  jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => {
+    userID = decoded._id;
+  });
+  connection((db) => {
+    // Get a list of project IDs associated with the user.
+    db.collection('users').findOne({_id: ObjectID(userID)})
+      .then((user) => {
+        let projectList = [];
+        user.projects.forEach(project => projectList.push(project._id));
+        // Retrieve the projects matching those IDs.
+        db.collection('usecases').find({project: {$in: projectList}})
+          .toArray()
+          .then(useCases => {
+            // Return to sender ^.^
+            res.setHeader('Content-Type', 'application/json');
+            response.data = useCases;
+            res.json(response);
+          })
+      })
+      .catch((err) => {
+        sendError(err, res);
+      });
+  });
+});
+
 router.get('/projects/:projectID',(req, res)=>{
   connection((db) => {
     db.collection('projects').findOne({_id: ObjectID(req.params.projectID)})
