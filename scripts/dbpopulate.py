@@ -67,25 +67,25 @@ u1a = {"title":"use case 1a", "goal":"goal 1", "scope":"scope 1", "level":"level
 "preconditions":"condition 1, condition 2", "successEndCondition":"success 1", \
 "failedEndCondition":"fail 1", "primaryActor":"a1", "secondaryActors":"actor1, actor2", \
 "trigger":"trigger1", "description":"step1, step2", \
-"extensions":"step1, step2", "subVariations":"step1, step2"}
+"extensions":"step1, step2", "subVariations":"step1, step2", "project":p1i.inserted_id}
 
 u1b = {"title":"use case 1b", "goal":"goal 1", "scope":"scope 1", "level":"level 1", \
 "preconditions":"condition 1, condition 2", "successEndCondition":"success 1", \
 "failedEndCondition":"fail 1", "primaryActor":"a1", "secondaryActors":"actor1, actor2", \
 "trigger":"trigger1", "description":"step1, step2", \
-"extensions":"step1, step2", "subVariations":"step1, step2"}
+"extensions":"step1, step2", "subVariations":"step1, step2", "project":p1i.inserted_id}
 
 u2a = {"title":"use case 1", "goal":"goal 1", "scope":"scope 1", "level":"level 1", \
 "preconditions":"condition 1, condition 2", "successEndCondition":"success 1", \
 "failedEndCondition":"fail 1", "primaryActor":"a1", "secondaryActors":"actor1, actor2", \
 "trigger":"trigger1", "description":"step1, step2", \
-"extensions":"step1, step2", "subVariations":"step1, step2"}
+"extensions":"step1, step2", "subVariations":"step1, step2", "project":p2i.inserted_id}
 
 u3a = {"title":"use case 1", "goal":"goal 1", "scope":"scope 1", "level":"level 1", \
 "preconditions":"condition 1, condition 2", "successEndCondition":"success 1", \
 "failedEndCondition":"fail 1", "primaryActor":"a1", "secondaryActors":"actor1, actor2", \
 "trigger":"trigger1", "description":"step1, step2", \
-"extensions":"step1, step2", "subVariations":"step1, step2"}
+"extensions":"step1, step2", "subVariations":"step1, step2", "project":p3i.inserted_id}
 
 u1ai = usecases.insert_one(u1a)
 u1bi = usecases.insert_one(u1b)
