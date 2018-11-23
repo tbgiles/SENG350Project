@@ -43,14 +43,15 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  retProjectUseCases(){
-    this.useCaseIds.forEach(useCase => {
-      this._dataService.getUseCase(useCase._id)
-      .subscribe((res: response) => {
-        this.useCases.push(res.data);
-      });
-    });
-  }
+  // retProjectUseCases(){
+  //   this.useCaseIds.forEach(useCase => {
+  //     this._dataService.getUseCase(useCase._id)
+  //     .subscribe((res: response) => {
+  //       this.useCases.push(res.data);
+  //     });
+  //   });
+  // }
+  retProjectUseCases
 
   ngOnInit() {
   }

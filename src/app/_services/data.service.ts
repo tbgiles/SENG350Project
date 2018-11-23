@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-//import { Http, Headers, RequestOptions } from '@angular/http';
-
 import { Project } from '../project';
 import { UseCase } from '../usecase';
 
