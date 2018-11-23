@@ -5,13 +5,13 @@ export class UseCase {
   goal: string;
   scope: string;
   level: string;
-  preconditions: Array<string>;
+  preconditions: string;
   successEndCondition: string;
   failedEndCondition: string;
   primaryActor: string;
-  secondaryActors: Array<string>;
+  secondaryActors: string;
   trigger: string;
-  description: Array<string>;
-  extensions: Array<string>;
-  subVariations: Array<string>;
+  description: string;
+  extensions: string;
+  subVariations: string;
 }
