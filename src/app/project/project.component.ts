@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
 export class ProjectComponent implements OnInit {
 
   project: Project;
-  useCaseId: Array<any>;
+  useCaseIds: Array<any>;
   useCases: Array<UseCase>;
   selectedUseCase: UseCase;
   projectID: any
@@ -23,7 +23,7 @@ export class ProjectComponent implements OnInit {
   constructor(private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
 
     this.actr.data.subscribe(res => {
-      this.projectID = res.project
+      this.projectID = res.project;
       this.retProjectInfo();
     });
   }
@@ -36,14 +36,14 @@ export class ProjectComponent implements OnInit {
     .subscribe(res => {
       let json = res.json();
       this.project = json.data;
-      this.useCaseId = this.project.useCases;
+      this.useCaseIds = this.project.useCases;
       this.retProjectUseCases();
     });
   }
 
   retProjectUseCases(){
-    this.useCaseId.forEach(id => {
-      this._dataService.getUseCase(id)
+    this.useCaseIds.forEach(useCase => {
+      this._dataService.getUseCase(useCase._id)
       .subscribe(res => {
         let json = res.json();
         this.useCases.push(json.data);
@@ -60,19 +60,23 @@ export class ProjectComponent implements OnInit {
 
   submitNewUseCase(){
     var newUseCase = document.getElementById("useCaseForm");
+
     var object = new UseCase();
-    object.title = newUseCase.title.value;
-    object.goal = newUseCase.goal.value;
-    object.scope = newUseCase.scope.value;
-    object.level = newUseCase.level.value;
-    object.preconditions = newUseCase.preconditions.value;
-    object.successEndCondition = newUseCase.successEndCondition.value;
-    object.failedEndCondition = newUseCase.failedEndCondition.value;
-    object.primaryActor = newUseCase.primaryActor.value;
-    object.secondaryActors = newUseCase.secondaryActors.value;
-    object.trigger = newUseCase.trigger.value;
-    object.description
-    console.log(this.projectID);
+    object.project = this.projectID;
+    object.title = newUseCase[0].value;
+    object.goal = newUseCase[1].value;
+    object.scope = newUseCase[2].value;
+    object.level = newUseCase[3].value;
+    object.preconditions = newUseCase[4].value;
+    object.successEndCondition = newUseCase[5].value;
+    object.failedEndCondition = newUseCase[6].value;
+    object.primaryActor = newUseCase[7].value;
+    object.secondaryActors = newUseCase[8].value;
+    object.trigger = newUseCase[9].value;
+    object.description = newUseCase[10].value;
+    object.extensions = newUseCase[11].value;
+    object.subVariations = newUseCase[12].value;
+    this._dataService.submitUseCase(object);
   }
   /*export class UseCase {
     _id: string;

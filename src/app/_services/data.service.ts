@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { Project } from '../project';
+import { UseCase } from '../usecase';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class DataService {
 
   getUseCase(useCaseId: string){
     return this._http.get('/api/usecase/' + useCaseId);
+  }
+  
+  submitUseCase(useCase: UseCase){
+    this._http.post('/api/submitusecase', useCase);
   }
 }

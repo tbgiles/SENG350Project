@@ -6,7 +6,7 @@
         [class.selected]="usecase === selectedUseCase"
         (click)="onSelect(usecase)">
         <span class="badge">{{ usecase.projectID }}</span>{{ usecase.title }}</li>
-    <li (click)="usecaseCreateModal.open()"> Create a New Use Case</li>
+    <li (click)="usecaseCreateModal.open();"> Create a New Use Case</li>
   </ul>
 </div>
 <div *ngIf="selectedUseCase">
@@ -22,12 +22,12 @@
     <form id="useCaseForm">
       Title:<br>
       <input type="text" name="title" id="title"><br>
-      Use Case #:<br>
-      <input type="text" name="UseCaseNum" id="useCaseNum"><br>
-      Goal in Context:<br>
-      <textarea name="projectGoal" id="projectGoal" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      Scope & Level:<br>
+      Goal:<br>
+      <textarea type="text" name="goal" id="goal" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
+      Scope:<br>
       <input type="text" name="scope"><br>
+      Level:<br>
+      <input type="text" name="level"><br>
       Preconditions:<br>
       <textarea name="preconditions" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
       Success End Condition:<br>
@@ -46,26 +46,6 @@
       <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
       Sub Variations:<br>
       <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      Related Information:<br>
-      <textarea name="info" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      Priority:<br>
-      <input type="text" name="priority"><br>
-      Performance:<br>
-      <textarea name="performanceQualities" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      Frequency:<br>
-      <input type="text" name="frequency"><br>
-      Channels to Actors:<br>
-      <input type="text" name="channels"><br>
-      Open Issues:<br>
-      <textarea name="openIssues" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      Due Date:<br>
-      <input type="text" name="due"><br>
-      Managerial Information:<br>
-      <textarea name="managerial" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      Superordinates:<br>
-      <input type="text" name="super"><br>
-      Subordinates:<br>
-      <input type="text" name="sub"><br>
       <button mat-button (click)="submitNewUseCase()">Submit</button>
     </form>
   </ng-template>
