@@ -131,9 +131,10 @@ router.get('/usecase/:useCaseID',(req, res)=>{
   });
 });
 
-router.post('/submitusecase', (req, res) => {
-  console.log("Body should be here");
+router.post('/submit/usecase', (req, res) => {
+  console.dir("Body should be here");
   console.log(req.body);
+  res.status(200).send({"message" : "OK"});
 });
 
 module.exports = router;
