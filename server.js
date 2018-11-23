@@ -4,7 +4,6 @@ const path = require("path");
 const http = require("http");
 const app = express();
 const jwt = require('jsonwebtoken');
-const expressJwt= require('express-jwt');
 const fs = require('fs');
 
 // API file for interacting with MongoDB
@@ -21,8 +20,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', api);
 
 // Authentication
-const RSA_PRIVATE_KEY = fs.readFileSync('./private.key', 'utf-8');
-const RSA_PUBLIC_KEY = fs.readFileSync('./public.key', 'utf-8');
+const RSA_PRIVATE_KEY = fs.readFileSync('private.key', 'utf-8');
 
 // This function is called when AuthService calls the '/auth' path.
 const loginRoute = (req, res) => {
