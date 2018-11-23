@@ -43,15 +43,14 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  // retProjectUseCases(){
-  //   this.useCaseIds.forEach(useCase => {
-  //     this._dataService.getUseCase(useCase._id)
-  //     .subscribe((res: response) => {
-  //       this.useCases.push(res.data);
-  //     });
-  //   });
-  // }
-  retProjectUseCases
+  retProjectUseCases(){
+    this.useCaseIds.forEach(useCase => {
+      this._dataService.getUseCase(useCase._id)
+      .subscribe((res: response) => {
+        this.useCases.push(res.data);
+      });
+    });
+  }
 
   ngOnInit() {
   }
@@ -65,7 +64,7 @@ export class ProjectComponent implements OnInit {
 
     var object = new UseCase();
     object.project = this.projectID;
-    object.title = newUseCase[0].value;
+    object.title = newUseCase[0].value ?  newUseCase[0].value : "Untitled";
     object.goal = newUseCase[1].value;
     object.scope = newUseCase[2].value;
     object.level = newUseCase[3].value;

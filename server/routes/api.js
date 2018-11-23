@@ -136,10 +136,11 @@ router.get('/projects/:projectID',(req, res)=>{
 // Get a single use case
 router.get('/usecase/:useCaseID',(req, res)=>{
   connection((db) => {
-    db.collection('usecases').findOne({_id: ObjectID(req.params.projectID)})
+    db.collection('usecases').findOne({_id: ObjectID(req.params.useCaseID)})
     .then((useCase) => {
       res.setHeader('Content-Type', 'application/json');
       response.data = useCase;
+      console.log(useCase);
       res.json(response);
     })
     .catch((err) => {
