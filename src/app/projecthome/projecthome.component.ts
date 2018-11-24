@@ -17,7 +17,6 @@ export class ProjectHomeComponent implements OnInit {
   selectedProject: Project;
 
   constructor(private _dataService: DataService, private router: Router) {
-    console.log("Opening Project Home Page");
     this.selectedProject = null;
     this.getProjects();
   }

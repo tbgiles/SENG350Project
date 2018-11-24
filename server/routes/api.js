@@ -100,7 +100,7 @@ router.get('/projects', (req, res)=>{
   connection((db) => {
     // Get a list of project IDs associated with the user.
     db.collection('users').findOne({_id: ObjectID(userID)})
-      .then((user) => {
+      .then(user => {
         let projectList = [];
         user.projects.forEach(project => projectList.push(project._id));
         // Retrieve the projects matching those IDs.
@@ -119,7 +119,6 @@ router.get('/projects', (req, res)=>{
   });
 });
 
-// This is an untested endpoint that retrieves all use cases a use has access to.
 // This is for the requirement of having an overview page of usecases.
 router.get('/usecases', (req, res)=>{
   // Validate the user's identity using their JWT
@@ -131,17 +130,28 @@ router.get('/usecases', (req, res)=>{
   connection((db) => {
     // Get a list of project IDs associated with the user.
     db.collection('users').findOne({_id: ObjectID(userID)})
-      .then((user) => {
+      .then(user => {
         let projectList = [];
         user.projects.forEach(project => projectList.push(project._id));
         // Retrieve the projects matching those IDs.
-        db.collection('usecases').find({project: {$in: projectList}})
+        db.collection('projects').find({_id: {$in: projectList}})
           .toArray()
-          .then(useCases => {
-            // Return to sender ^.^
-            res.setHeader('Content-Type', 'application/json');
-            response.data = useCases;
-            res.json(response);
+          .then(projects => {
+            let useCaseList = [];
+            projects.forEach(project => {
+              project.useCases.forEach(useCase => {
+                useCaseList.push(useCase._id);
+              });
+            });
+            // Retrieve all use cases associated with these projects.
+            db.collection('usecases').find({_id: {$in: useCaseList}})
+              .toArray()
+              .then(usecases => {
+                // Return to sender ^.^
+                res.setHeader('Content-Type', 'application/json');
+                response.data = usecases;
+                res.json(response);
+              })
           })
       })
       .catch((err) => {

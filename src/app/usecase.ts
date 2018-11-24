@@ -7,7 +7,7 @@ export class UseCase {
   level: string;
   preconditions: string;
   successEndCondition: string;
-  failedEndCondition: string;t
+  failedEndCondition: string;
   primaryActor: string;
   secondaryActors: string;
   trigger: string;

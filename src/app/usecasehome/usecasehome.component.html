@@ -1,0 +1,28 @@
+<div class="usecase-container">
+  My Available UseCases
+  <ul class="usecase">
+    <li *ngFor="let usecase of usecases"
+        [class.selected]="usecase === selectedUseCase"
+        (click)="onSelect(usecase)">
+      {{ usecase.title }}</li>
+    <li (click)="usecaseCreateModal.open()"> Create a New UseCase</li>
+  </ul>
+</div>
+<div *ngIf="selectedUseCase">
+  <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
+  <button mat-button (click)="openUseCase()">View UseCase</button>
+</div>
+
+<!-- <button (click)="htmlInsideModal.open()">Raw HTML inside modal</button> -->
+<modal #usecaseCreateModal class="usecaseCreateModal">
+  <ng-template #modalHeader><h2>Create UseCase</h2></ng-template>
+  <ng-template #modalBody>
+    <p>Fill in Related Use Case Information</p>
+    <form id="newUseCaseForm">
+      UseCase #:<br>
+      <input type="text" name="usecasenum"><br>
+      Title:<br>
+      <input type="text" name="title"><br>
+    </form>
+  </ng-template>
+</modal>

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
       .subscribe( () => {
         console.log(`Successfully logged in as ${this.selectedUser.name}`);
         this.logged.emit(true);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/usecases');
       });
   }
 }

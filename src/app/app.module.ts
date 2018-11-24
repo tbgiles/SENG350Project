@@ -15,6 +15,7 @@ import { ModalModule } from 'angular-custom-modal';
 import { ProjectComponent } from './project/project.component';
 
 import { ProjectResolver } from './project/project-resolver.service';
+import { UseCaseHomeComponent } from './usecasehome/usecasehome.component';
 
 
 const appRoutes: Routes = [
@@ -31,8 +32,13 @@ const appRoutes: Routes = [
     }
   },
   {
-    path: '',
+    path: 'projects',
     component: ProjectHomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'usecases',
+    component: UseCaseHomeComponent,
     canActivate: [AuthGuard]
   }
 ];
@@ -42,7 +48,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     ProjectHomeComponent,
-    ProjectComponent
+    ProjectComponent,
+    UseCaseHomeComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

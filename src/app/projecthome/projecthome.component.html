@@ -1,13 +1,10 @@
-<p>
-  projecthome works!
-</p>
 <div class="project-container">
   My Available Projects
   <ul class="project">
     <li *ngFor="let project of projects"
         [class.selected]="project === selectedProject"
         (click)="onSelect(project)">
-      <span class="badge">{{ project.projectID }}</span>{{ project.title }}</li>
+      {{ project.title }}</li>
     <li (click)="projectCreateModal.open()"> Create a New Project</li>
   </ul>
 </div>

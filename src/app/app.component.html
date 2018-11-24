@@ -1,6 +1,9 @@
 <div class="header">
-  <div class="header-text" *ngIf="currentUser">
-    <span>Welcome {{ currentUser }}!  </span>
+  <div class="header-text"
+    *ngIf="currentUser">
+    <span>Welcome, {{ currentUser }}!</span>
+    <a href="/usecases">Use Cases</a>
+    <a href="/projects">Projects</a>
     <button mat-button (click)="logout()">Log out</button>
   </div>
   <div class="header-text"
