@@ -13,7 +13,7 @@ export class DataService {
   constructor(private _http: HttpClient) { }
 
   getUser(userId: number) {
-    return this._http.get('/api/user' + String(userId));
+    return this._http.get('/api/user/' + String(userId));
   }
 
   getUsers() {
@@ -21,7 +21,7 @@ export class DataService {
   }
 
   getProject(projectId: string) {
-    return this._http.get('/api/projects' + projectId);
+    return this._http.get('/api/projects/' + projectId);
   }
 
   getProjects() {
@@ -29,7 +29,7 @@ export class DataService {
   }
 
   getUseCase(useCaseId: string) {
-    return this._http.get('/api/usecase' + useCaseId);
+    return this._http.get('/api/usecase/' + useCaseId);
   }
 
   getUseCases() {
