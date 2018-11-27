@@ -1,9 +1,8 @@
 .selected {
-  background-color: #CFD8DC !important;
-  color: blue;
+  background-color: #465FB933 !important;
 }
 .users {
-  margin: 0 0 2em 0;
+  margin: 0 auto;
   list-style-type: none;
   padding: 0;
   width: 15em;
@@ -12,14 +11,13 @@
   cursor: pointer;
   position: relative;
   left: 0;
-  background-color: #EEE;
+  background-color: #d3d3d3e6;
   margin: .5em;
-  padding: .3em 0;
-  height: 1.6em;
+  padding: 10px 10px 10px;
   border-radius: 4px;
 }
 .users li.selected:hover {
-  background-color: #BBD8DC !important;
+  background-color: #465FB9 !important;
   color: white;
 }
 .users li:hover {
@@ -44,4 +42,33 @@
   height: 1.8em;
   margin-right: .8em;
   border-radius: 4px 0 0 4px;
+}
+
+h1{
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+h2{
+  width: 100%;
+  text-align: center;
+}
+
+.login-button{
+  background-color: #465FB9;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+}
+
+.login-button:hover {
+  background-color: transparent;
+  color: #465FB9;
+  border: 2px solid #465FB9;
+  padding: 8px 13px;
 }

@@ -3,10 +3,10 @@
   <li *ngFor="let user of users"
     [class.selected]="user === selectedUser"
     (click)="onSelect(user)">
-    <span class="badge">{{ user.userId }}</span>{{ user.name }}</li>
+    {{ user.name }}</li>
 </ul>
 
 <div *ngIf="selectedUser">
   <h2>{{selectedUser.name | uppercase}} Selected</h2>
-  <button mat-button (click)="login()">Log in</button>
+  <button class="login-button" mat-button (click)="login()">Log in</button>
 </div>
