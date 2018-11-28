@@ -4,7 +4,7 @@
     <span>Welcome, {{ currentUser }}!</span>
     <a href="/usecases">Use Cases</a>
     <a href="/projects">Projects</a>
-    <button mat-button (click)="logout()">Log out</button>
+    <button class="logout-button" mat-button (click)="logout()">Log out</button>
   </div>
   <div class="header-text"
     *ngIf="!currentUser">
@@ -18,5 +18,5 @@
 <router-outlet (activate)="getCurrentUser()"
   (deactivate)="getCurrentUser()"></router-outlet>
 <div class="footer">
-  footer goes here<br/>
+  <p class="footer-text">Created by: Tristan Giles, Matthew Fortier, Amritijot Madahar, and Geena Smith</p>
 </div>

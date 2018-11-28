@@ -12,9 +12,9 @@ html, body{
 }
 
 .header-text{
-  padding: 5px;
   color: white;
   float: right;
+  border: none;
 }
 
 .header-text a {
@@ -26,12 +26,22 @@ html, body{
   font-size: 16px;
 }
 
-.header-text button {
+.logout-button {
   float: left;
   text-align: center;
-  padding: 14px 16px;
+  padding: 13px 16px;
   text-decoration: none;
   font-size: 16px;
+  border: none;
+  background-color: #d3d3d3b3;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #465FB9;
+  color: white;
+  border: 2px solid white !important;
+  padding: 11px 14px;
 }
 
 .header-text span {
@@ -48,4 +58,18 @@ html, body{
 
 .header-text a.active {
   color: white;
+}
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  background-color: #465FB9;
+  width: 100%;
+  padding-left: 15px;
+}
+
+.footer-text{
+  margin: 5px;
+  color: white;
+  font-size: 14px;
 }
