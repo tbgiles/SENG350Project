@@ -3,6 +3,10 @@
   margin: auto;
 }
 
+.usecase-searchbar{
+  text-align: center;
+}
+
 .selected {
   background-color: #CFD8DC !important;
   color: blue;

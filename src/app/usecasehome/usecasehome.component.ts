@@ -5,6 +5,7 @@ import { User } from '../user';
 import { UseCase } from '../usecase';
 import { Router } from '@angular/router'
 import { response } from '../response';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-usecasehome',
@@ -14,6 +15,7 @@ import { response } from '../response';
 export class UseCaseHomeComponent implements OnInit {
 
   usecases: Array<UseCase>;
+  displayedUsecases: Array<UseCase>;
   selectedUseCase: UseCase;
 
   constructor(private _dataService: DataService, private router: Router) {
@@ -28,11 +30,18 @@ export class UseCaseHomeComponent implements OnInit {
     this._dataService.getUseCases()
       .subscribe((res: response) => {
         this.usecases = res.data;
+        this.displayedUsecases = res.data;
       });
   }
 
   onSelect(usecase: UseCase) {
     this.selectedUseCase = usecase;
+  }
+
+  onKey(event: any) {
+    this.displayedUsecases = _.filter(this.usecases, (usecase) => {
+      return (usecase.title.search(event.target.value) >= 0)
+    })
   }
 
   // Undecided on how this should work.

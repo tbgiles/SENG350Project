@@ -1,10 +1,12 @@
-<h1>My available use cases</h1>
-
+<h1>My Available Use Cases</h1>
+<div class="usecase-searchbar">
+  <input (keyup)="onKey($event)" placeholder="Search Use Cases...">
+</div>
 <div class="usecase-container">
   <!-- My Available UseCases -->
   <ul class="usecase">
     <!-- <span> -->
-      <li *ngFor="let usecase of usecases"
+      <li *ngFor="let usecase of displayedUsecases"
           [class.selected]="usecase === selectedUseCase"
           (click)="onSelect(usecase)">
         <span>{{ usecase.title }}</span></li>
