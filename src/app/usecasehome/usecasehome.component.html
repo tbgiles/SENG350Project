@@ -1,20 +1,24 @@
+<h1>My available use cases</h1>
+
 <div class="usecase-container">
-  My Available UseCases
+  <!-- My Available UseCases -->
   <ul class="usecase">
-    <li *ngFor="let usecase of usecases"
-        [class.selected]="usecase === selectedUseCase"
-        (click)="onSelect(usecase)">
-      {{ usecase.title }}</li>
-    <li (click)="usecaseCreateModal.open()"> Create a New UseCase</li>
+    <!-- <span> -->
+      <li *ngFor="let usecase of usecases"
+          [class.selected]="usecase === selectedUseCase"
+          (click)="onSelect(usecase)">
+        <span>{{ usecase.title }}</span></li>
+      <!-- <li (click)="usecaseCreateModal.open()"> Create a New UseCase</li> -->
+  <!-- </span> -->
   </ul>
 </div>
 <div *ngIf="selectedUseCase">
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
-  <button mat-button (click)="openUseCase()">View UseCase</button>
+  <button class="select-button" mat-button (click)="openUseCase()">View UseCase</button>
 </div>
 
 <!-- <button (click)="htmlInsideModal.open()">Raw HTML inside modal</button> -->
-<modal #usecaseCreateModal class="usecaseCreateModal">
+<!-- <modal #usecaseCreateModal class="usecaseCreateModal">
   <ng-template #modalHeader><h2>Create UseCase</h2></ng-template>
   <ng-template #modalBody>
     <p>Fill in Related Use Case Information</p>
@@ -25,4 +29,4 @@
       <input type="text" name="title"><br>
     </form>
   </ng-template>
-</modal>
+</modal> -->
