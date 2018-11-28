@@ -10,13 +10,12 @@
 </div>
 <div *ngIf="selectedUseCase">
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
-  <button class="select-button" mat-button (click)="usecaseOpenModal.open();">View Usecase</button>
+  <button class="select-button" (click)="usecaseOpenModal.open();">View Usecase</button>
 </div>
 
 <modal #usecaseOpenModal class="usecaseOpenModal">
   <ng-template #modalHeader><h2>View UseCase</h2></ng-template>
   <ng-template #modalBody>
-    <p>Use Case Information</p>
     <form id="existingUseCaseForm">
       Title:<br>
       <input type="text" name="title" id="title" value={{this.selectedUseCase.title}}><br>
@@ -38,7 +37,7 @@
       <textarea name="secondaryActors" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.secondaryActors}}></textarea><br>
       Trigger:<br>
       <textarea name="trigger" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.trigger}}></textarea><br>
-      Desription:<br>
+      Description:<br>
       <textarea name="description" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.description}}></textarea><br>
       Extensions:<br>
       <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.extensions}}></textarea><br>
@@ -54,7 +53,6 @@
 <modal #usecaseCreateModal class="usecaseCreateModal">
   <ng-template #modalHeader><h2>Create UseCase</h2></ng-template>
   <ng-template #modalBody>
-    <p>Fill in Related Use Case Information</p>
     <form id="useCaseForm">
       Title:<br>
       <input type="text" name="title" id="title"><br>
@@ -76,7 +74,7 @@
       <textarea name="secondaryActors" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
       Trigger:<br>
       <textarea name="trigger" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      Desription:<br>
+      Description:<br>
       <textarea name="description" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
       Extensions:<br>
       <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>

@@ -3,21 +3,54 @@
   <input (keyup)="onKey($event)" placeholder="Search Use Cases...">
 </div>
 <div class="usecase-container">
-  <!-- My Available UseCases -->
   <ul class="usecase">
-    <!-- <span> -->
       <li *ngFor="let usecase of displayedUsecases"
           [class.selected]="usecase === selectedUseCase"
           (click)="onSelect(usecase)">
         <span>{{ usecase.title }}</span></li>
-      <!-- <li (click)="usecaseCreateModal.open()"> Create a New UseCase</li> -->
-  <!-- </span> -->
   </ul>
 </div>
 <div *ngIf="selectedUseCase">
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
-  <button class="select-button" mat-button (click)="openUseCase()">View UseCase</button>
+  <button class="select-button" (click)="usecaseOpenModal.open();">View Usecase</button>
 </div>
+
+<modal #usecaseOpenModal class="usecaseOpenModal">
+    <ng-template #modalHeader><h2>View UseCase</h2></ng-template>
+    <ng-template #modalBody>
+      <form id="existingUseCaseForm">
+        Title:<br>
+        <input type="text" name="title" id="title" value={{this.selectedUseCase.title}}><br>
+        Goal:<br>
+        <textarea type="text" name="goal" id="goal" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.goal}}></textarea><br>
+        Scope:<br>
+        <input type="text" name="scope" value={{this.selectedUseCase.scope}}><br>
+        Level:<br>
+        <input type="text" name="level" value={{this.selectedUseCase.level}}><br>
+        Preconditions:<br>
+        <textarea name="preconditions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.preconditions}}></textarea><br>
+        Success End Condition:<br>
+        <textarea name="successEnd" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.successEndCondition}}></textarea><br>
+        Failed End Condition:<br>
+        <textarea name="failEnd" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.failedEndCondition}}></textarea><br>
+        Primary Actors:<br>
+        <textarea name="actors" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.primaryActor}}></textarea><br>
+        Secondary Actors:<br>
+        <textarea name="secondaryActors" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.secondaryActors}}></textarea><br>
+        Trigger:<br>
+        <textarea name="trigger" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.trigger}}></textarea><br>
+        Description:<br>
+        <textarea name="description" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.description}}></textarea><br>
+        Extensions:<br>
+        <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.extensions}}></textarea><br>
+        Sub Variations:<br>
+        <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.subVariations}}></textarea><br>
+        <button mat-button (click)="submitOldUseCase()">Submit</button>
+        <button mat-button (click)="existingUseCaseForm.close()">Cancel</button>
+  
+      </form>
+    </ng-template>
+  </modal>
 
 <!-- <button (click)="htmlInsideModal.open()">Raw HTML inside modal</button> -->
 <!-- <modal #usecaseCreateModal class="usecaseCreateModal">
