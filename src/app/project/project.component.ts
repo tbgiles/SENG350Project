@@ -22,15 +22,12 @@ export class ProjectComponent implements OnInit {
   projectID: any
 
   constructor(private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
-
     this.actr.data.subscribe(res => {
       this.projectID = res.project;
       this.useCases = new Array();
       this.retProjectInfo();
     });
-
   }
-
 
 // TODO: Fix the usecase issue
 
@@ -59,6 +56,23 @@ export class ProjectComponent implements OnInit {
     this.selectedUseCase = usecase;
   }
 
+  populateData(){
+    var oldUseCase = document.getElementById("existingUseCaseForm");
+    oldUseCase[0].value = this.selectedUseCase.title;
+    oldUseCase[1].value = this.selectedUseCase.goal;
+    oldUseCase[2].value = this.selectedUseCase.scope;
+    oldUseCase[3].value = this.selectedUseCase.level;
+    oldUseCase[4].value = this.selectedUseCase.preconditions;
+    oldUseCase[5].value = this.selectedUseCase.successEndCondition;
+    oldUseCase[6].value = this.selectedUseCase.failedEndCondition;
+    oldUseCase[7].value = this.selectedUseCase.primaryActor;
+    oldUseCase[8].value = this.selectedUseCase.secondaryActors;
+    oldUseCase[9].value = this.selectedUseCase.trigger;
+    oldUseCase[10].value = this.selectedUseCase.description;
+    oldUseCase[11].value = this.selectedUseCase.extensions;
+    oldUseCase[12].value = this.selectedUseCase.subVariations;
+  }
+
   submitNewUseCase(){
     var newUseCase = document.getElementById("useCaseForm");
 
@@ -79,22 +93,26 @@ export class ProjectComponent implements OnInit {
     object.subVariations = newUseCase[12].value;
     this._dataService.submitUseCase(object);
   }
-  /*export class UseCase {
-    _id: string;
-    project: string; //ObjectID of the project
-    title: string;
-    goal: string;
-    scope: string;
-    level: string;
-    preconditions: Array<string>;
-    successEndCondition: string;
-    failedEndCondition: string;
-    primaryActor: string;
-    secondaryActors: Array<string>;
-    trigger: string;
-    description: Array<string>;
-    extensions: Array<string>;
-    subVariations: Array<string>;
-  }*/
 
+  submitOldUseCase(){
+    var oldUseCase = document.getElementById("existingUseCaseForm");
+
+    var object = new UseCase();
+    object._id = this.selectedUseCase._id;
+    object.project = this.projectID;
+    object.title = oldUseCase[0].value ?  oldUseCase[0].value : "Untitled";
+    object.goal = oldUseCase[1].value;
+    object.scope = oldUseCase[2].value;
+    object.level = oldUseCase[3].value;
+    object.preconditions = oldUseCase[4].value;
+    object.successEndCondition = oldUseCase[5].value;
+    object.failedEndCondition = oldUseCase[6].value;
+    object.primaryActor = oldUseCase[7].value;
+    object.secondaryActors = oldUseCase[8].value;
+    object.trigger = oldUseCase[9].value;
+    object.description = oldUseCase[10].value;
+    object.extensions = oldUseCase[11].value;
+    object.subVariations = oldUseCase[12].value;
+    this._dataService.updateUseCase(object);
+  }
 }

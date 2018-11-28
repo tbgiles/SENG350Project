@@ -181,7 +181,6 @@ router.get('/usecase/:useCaseID',(req, res)=>{
     .then((useCase) => {
       res.setHeader('Content-Type', 'application/json');
       response.data = useCase;
-      console.log(useCase);
       res.json(response);
     })
     .catch((err) => {
@@ -194,12 +193,24 @@ router.post('/submit/usecase', (req, res) => {
   console.dir("Body should be here");
   delete req.body._id; // Make sure there's no attached ID
   let owningProject = req.body.project;
-  console.log(owningProject);
 
   connection((db) => {
     db.collection('usecases').insertOne(req.body, (err, respObj) => {
       db.collection('projects').update({_id:ObjectID(owningProject)}, {$push:{"useCases":{"_id":respObj.insertedId}}});
     });
+
+  });
+  res.status(200).send({"message" : "OK"});
+});
+
+router.post('/update/usecase', (req, res) => {
+  let useCaseID = req.body._id;
+  delete req.body._id;
+  delete req.body.project;
+  console.log(req.body)
+
+  connection((db) => {
+    db.collection('usecases').updateOne({_id:ObjectID(useCaseID)}, {$set: req.body}, (err, respObj) => {});
 
   });
   res.status(200).send({"message" : "OK"});

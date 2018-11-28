@@ -11,42 +11,43 @@
 </div>
 <div *ngIf="selectedUseCase">
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
-  <button mat-button (click)="usecaseOpenModal.open()">View Usecase</button>
+  <button mat-button (click)="usecaseOpenModal.open();">View Usecase</button>
 </div>
 
 <modal #usecaseOpenModal class="usecaseOpenModal">
-  <ng-template #modalHeader><h2>Create UseCase</h2></ng-template>
+  <ng-template #modalHeader><h2>View UseCase</h2></ng-template>
   <ng-template #modalBody>
     <p>Use Case Information</p>
     <form id="existingUseCaseForm">
       Title:<br>
-      <input type="text" name="title" id="title"><br>
+      <input type="text" name="title" id="title" value={{this.selectedUseCase.title}}><br>
       Goal:<br>
-      <textarea type="text" name="goal" id="goal" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea type="text" name="goal" id="goal" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.goal}}></textarea><br>
       Scope:<br>
-      <input type="text" name="scope"><br>
+      <input type="text" name="scope" value={{this.selectedUseCase.scope}}><br>
       Level:<br>
-      <input type="text" name="level"><br>
+      <input type="text" name="level" value={{this.selectedUseCase.level}}><br>
       Preconditions:<br>
-      <textarea name="preconditions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="preconditions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.preconditions}}></textarea><br>
       Success End Condition:<br>
-      <textarea name="successEnd" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="successEnd" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.successEndCondition}}></textarea><br>
       Failed End Condition:<br>
-      <textarea name="failEnd" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="failEnd" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.failedEndCondition}}></textarea><br>
       Primary Actors:<br>
-      <textarea name="actors" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="actors" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.primaryActor}}></textarea><br>
       Secondary Actors:<br>
-      <textarea name="secondaryActors" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="secondaryActors" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.secondaryActors}}></textarea><br>
       Trigger:<br>
-      <textarea name="trigger" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="trigger" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.trigger}}></textarea><br>
       Desription:<br>
-      <textarea name="description" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="description" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.description}}></textarea><br>
       Extensions:<br>
-      <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
+      <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.extensions}}></textarea><br>
       Sub Variations:<br>
-      <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm"></textarea><br>
-      <button mat-button (click)="usecaseOpenModal.close()">Cancel</button>
-      <button mat-button (click)="submitNewUseCase()">Submit</button>
+      <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.subVariations}}></textarea><br>
+      <button mat-button (click)="submitOldUseCase()">Submit</button>
+      <button mat-button (click)="existingUseCaseForm.close()">Cancel</button>
+
     </form>
   </ng-template>
 </modal>
