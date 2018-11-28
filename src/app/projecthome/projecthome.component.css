@@ -1,36 +1,30 @@
 .project-container{
-  width: fit-content;
-  height: fit-content;
-  background-color: lightgray;
-  position: relative;
-  left: 50%;
-  text-align: center;
+  width: 95%;
+  margin: auto;
 }
 
 .selected {
   background-color: #CFD8DC !important;
-  color: blue;
+  color: #465FB9;
 }
 
 .project {
-  margin: 0 0 2em 0;
-  list-style-type: none;
+  width: 100%;
   padding: 0;
-  width: 15em;
 }
 .project li {
-  cursor: pointer;
-  position: relative;
-  left: 0;
+  display: -moz-inline-stack;
+  display: inline-block;
+  margin: 5px;
   background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-  text-align: left;
+  *display: inline;
+  width: 24%;
+  height: 100px;
+  text-align: center;
+  padding-top: 10px;
 }
 .project li.selected:hover {
-  background-color: #BBD8DC !important;
+  background-color: #465FB9 !important;
   color: white;
 }
 .project li:hover {
@@ -42,6 +36,7 @@
   position: relative;
   top: -3px;
 }
+
 .project .badge {
   display: inline-block;
   font-size: small;
@@ -55,4 +50,33 @@
   height: 1.8em;
   margin-right: .8em;
   border-radius: 4px 0 0 4px;
+}
+
+h1{
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+h2{
+  width: 100%;
+  text-align: center;
+}
+
+.select-button{
+  background-color: #465FB9;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+}
+
+.select-button:hover {
+  background-color: transparent;
+  color: #465FB9;
+  border: 2px solid #465FB9;
+  padding: 8px 13px;
 }

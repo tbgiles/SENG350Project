@@ -1,17 +1,16 @@
-
+<h1>My Available Use Cases</h1>
 <div class="usecase-container">
-  My Available Use Cases
   <ul class="usecase">
     <li *ngFor="let usecase of useCases"
         [class.selected]="usecase === selectedUseCase"
         (click)="onSelect(usecase)">
-        <span class="badge">{{ usecase.projectID }}</span>{{ usecase.title }}</li>
+        {{ usecase.title }}</li>
     <li (click)="usecaseCreateModal.open();"> Create a New Use Case</li>
   </ul>
 </div>
 <div *ngIf="selectedUseCase">
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
-  <button mat-button (click)="usecaseOpenModal.open();">View Usecase</button>
+  <button class="select-button" mat-button (click)="usecaseOpenModal.open();">View Usecase</button>
 </div>
 
 <modal #usecaseOpenModal class="usecaseOpenModal">

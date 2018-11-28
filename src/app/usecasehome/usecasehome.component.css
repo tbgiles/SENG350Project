@@ -9,7 +9,7 @@
 
 .selected {
   background-color: #CFD8DC !important;
-  color: blue;
+  color: #465FB9;
 }
 
 .usecase {
@@ -24,7 +24,6 @@
   *display: inline;
   width: 24%;
   height: 100px;
-  /* float: left; */
   text-align: center;
   padding-top: 10px;
 }
