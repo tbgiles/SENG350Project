@@ -28,6 +28,11 @@ modal .modal-body{
   overflow-y: scroll;
 }
 
+modal.deleteConf .modal-body{
+  height: 5vh;
+  overflow-y: hidden;
+}
+
 modal .modal-content{
   display: inline-block;
   width: 100%;

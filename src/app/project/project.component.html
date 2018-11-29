@@ -12,6 +12,9 @@
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
   <button class="select-button" (click)="usecaseOpenModal.open();">View Usecase</button>
 </div>
+<div *ngIf="selectedUseCase">
+  <button class="select-button" (click)="deleteConf.open()">Delete Usecase</button>
+</div>
 
 <modal #usecaseOpenModal class="usecaseOpenModal">
   <ng-template #modalHeader><h2>View UseCase</h2></ng-template>
@@ -81,6 +84,16 @@
       Sub Variations:<br>
       <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
       <button class="cusButton" mat-button (click)="submitNewUseCase()">Submit</button>
+    </form>
+  </ng-template>
+</modal>
+
+<modal #deleteConf class="deleteConf">
+  <ng-template #modalHeader><h2>Delete UseCase?</h2></ng-template>
+  <ng-template #modalBody>
+    <form>
+      <button class="cusButton" mat-button (click)="dropUseCase()">Confirm</button>
+      <button class="cusButton" mat-button (click)="deleteConf.close()">Cancel</button>
     </form>
   </ng-template>
 </modal>

@@ -73,6 +73,7 @@ h2{
   display: block;
   position: relative;
   margin: 0 auto;
+  margin-top: 10px;
 }
 
 .select-button:hover {

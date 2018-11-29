@@ -115,4 +115,8 @@ export class ProjectComponent implements OnInit {
     object.subVariations = oldUseCase[12].value;
     this._dataService.updateUseCase(object);
   }
+
+  dropUseCase(){
+    this._dataService.dropUseCase(this.selectedUseCase);
+  }
 }
