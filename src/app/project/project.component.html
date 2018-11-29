@@ -8,11 +8,9 @@
     <li class="createNewButton" (click)="usecaseCreateModal.open();"> Create a New Use Case</li>
   </ul>
 </div>
-<div *ngIf="selectedUseCase">
+<div style="margin-bottom: 85px;" *ngIf="selectedUseCase">
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
   <button class="select-button" (click)="usecaseOpenModal.open();">View Usecase</button>
-</div>
-<div *ngIf="selectedUseCase">
   <button class="select-button" (click)="deleteConf.open()">Delete Usecase</button>
 </div>
 
