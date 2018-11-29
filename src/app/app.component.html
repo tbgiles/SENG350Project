@@ -4,6 +4,7 @@
     <span>Welcome, {{ currentUser }}!</span>
     <a href="/usecases">Use Cases</a>
     <a href="/projects">Projects</a>
+    <a *ngIf="currentUser == 'Admin'" href="/admin">Account Management</a>
     <button class="logout-button" mat-button (click)="logout()">Log out</button>
   </div>
   <div class="header-text"
