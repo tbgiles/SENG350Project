@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
 
 import { AppComponent } from './app.component';
 import { DataService } from './_services/data.service';
@@ -16,6 +17,7 @@ import { ProjectComponent } from './project/project.component';
 
 import { ProjectResolver } from './project/project-resolver.service';
 import { UseCaseHomeComponent } from './usecasehome/usecasehome.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 const appRoutes: Routes = [
@@ -44,6 +46,11 @@ const appRoutes: Routes = [
     path: 'usecases',
     component: UseCaseHomeComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AdminGuard]
   }
 ];
 
@@ -53,7 +60,8 @@ const appRoutes: Routes = [
     LoginComponent,
     ProjectHomeComponent,
     ProjectComponent,
-    UseCaseHomeComponent
+    UseCaseHomeComponent,
+    AdminComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

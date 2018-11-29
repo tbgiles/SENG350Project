@@ -54,6 +54,10 @@ export class AuthService {
     return !this.isLoggedIn();
   }
 
+  public isAdmin() {
+    return this.isLoggedIn() && (localStorage.getItem('name') == 'Admin');
+  }
+
   // Check credential expiration time, from browser's Storage.
   getExpiration() {
     const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
