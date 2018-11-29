@@ -5,7 +5,7 @@
         [class.selected]="usecase === selectedUseCase"
         (click)="onSelect(usecase)">
         {{ usecase.title }}</li>
-    <li (click)="usecaseCreateModal.open();"> Create a New Use Case</li>
+    <li class="createNewButton" (click)="usecaseCreateModal.open();"> Create a New Use Case</li>
   </ul>
 </div>
 <div *ngIf="selectedUseCase">

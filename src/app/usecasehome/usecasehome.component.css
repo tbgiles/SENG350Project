@@ -83,3 +83,7 @@ h2{
   border: 2px solid #465FB9;
   padding: 8px 13px;
 }
+
+.bottomSelectedBox{
+  height: 135px;
+}

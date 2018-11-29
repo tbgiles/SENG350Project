@@ -190,13 +190,12 @@ router.get('/usecase/:useCaseID',(req, res)=>{
 });
 
 router.post('/submit/usecase', (req, res) => {
-  console.dir("Body should be here");
   delete req.body._id; // Make sure there's no attached ID
   let owningProject = req.body.project;
 
   connection((db) => {
     db.collection('usecases').insertOne(req.body, (err, respObj) => {
-      db.collection('projects').update({_id:ObjectID(owningProject)}, {$push:{"useCases":{"_id":respObj.insertedId}}});
+      db.collection('projects').updateOne({_id:ObjectID(owningProject)}, {$push:{"useCases":{"_id":respObj.insertedId}}});
     });
 
   });

@@ -81,3 +81,7 @@ h2{
   padding: 8px 13px;
 }
 
+.createNewButton{
+  background-color: #465FB9 !important;
+  color: #EEE;
+}

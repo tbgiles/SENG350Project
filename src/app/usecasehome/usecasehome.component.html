@@ -10,7 +10,7 @@
         <span>{{ usecase.title }}</span></li>
   </ul>
 </div>
-<div *ngIf="selectedUseCase">
+<div class="bottomSelectedBox" *ngIf="selectedUseCase">
   <h2>{{selectedUseCase.title | uppercase}} Selected</h2>
   <button class="select-button" (click)="usecaseOpenModal.open();">View Usecase</button>
 </div>
@@ -47,7 +47,7 @@
         <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.subVariations}}></textarea><br>
         <button mat-button (click)="submitOldUseCase()">Submit</button>
         <button mat-button (click)="existingUseCaseForm.close()">Cancel</button>
-  
+
       </form>
     </ng-template>
   </modal>

@@ -22,6 +22,7 @@
   height: 100px;
   text-align: center;
   padding-top: 10px;
+  border-radius: 4px;
 }
 .project li.selected:hover {
   background-color: #465FB9 !important;
@@ -79,4 +80,9 @@ h2{
   color: #465FB9;
   border: 2px solid #465FB9;
   padding: 8px 13px;
+}
+
+.createNewButton{
+  background-color: #465FB9 !important;
+  color: #EEE;
 }

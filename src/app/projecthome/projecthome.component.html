@@ -5,7 +5,7 @@
         [class.selected]="project === selectedProject"
         (click)="onSelect(project)">
       {{ project.title }}</li>
-    <li (click)="projectCreateModal.open()"> Create a New Project</li>
+    <li class="createNewButton" (click)="projectCreateModal.open()"> Create a New Project</li>
   </ul>
 </div>
 <div *ngIf="selectedProject">
