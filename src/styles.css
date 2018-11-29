@@ -12,13 +12,14 @@ modal .modal-dialog{
   border: black; */
   /* border-width: 2px;
   border-style: double; */
+  border-radius: 7px;
   text-align: center;
   border: 1.5px solid #465FB9;
 }
 
 modal .modal-header{
   width: inherit;
-  
+
 }
 
 modal .modal-body{
@@ -38,13 +39,22 @@ modal h2{
 }
 
 modal button{
+  display: none;
+}
+
+modal .cusButton{
   display: inline-block;
-  float: right;
   border: 1.5px solid #465FB9;
   border-radius: 3px;
   margin: 2px;
   background-color: #465FB9;
   color: white;
+}
+
+modal .cusButton:hover{
+  border: 1.5px solid #465FB9 !important;
+  background-color: white;
+  color: #465FB9;
 }
 
 modal button:hover{

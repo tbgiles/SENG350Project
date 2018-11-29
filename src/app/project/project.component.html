@@ -1,4 +1,4 @@
-<h1>My Available Use Cases</h1>
+<div *ngIf="project"><h1>{{project.title | uppercase}}</h1></div>
 <div class="usecase-container">
   <ul class="usecase">
     <li *ngFor="let usecase of useCases"
@@ -43,8 +43,8 @@
       <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.extensions}}></textarea><br>
       Sub Variations:<br>
       <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="existingUseCaseForm" value={{this.selectedUseCase.subVariations}}></textarea><br>
-      <button mat-button (click)="submitOldUseCase()">Submit</button>
-      <button mat-button (click)="existingUseCaseForm.close()">Cancel</button>
+      <button class="cusButton" mat-button (click)="submitOldUseCase()">Submit</button>
+      <button class="cusButton" mat-button (click)="existingUseCaseForm.close()">Cancel</button>
 
     </form>
   </ng-template>
@@ -80,7 +80,7 @@
       <textarea name="extensions" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
       Sub Variations:<br>
       <textarea name="subvariations" style="height: 60px;" cols="40" rows="5" form="useCaseForm"></textarea><br>
-      <button mat-button (click)="submitNewUseCase()">Submit</button>
+      <button class="cusButton" mat-button (click)="submitNewUseCase()">Submit</button>
     </form>
   </ng-template>
 </modal>

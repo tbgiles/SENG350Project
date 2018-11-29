@@ -20,6 +20,10 @@ import { UseCaseHomeComponent } from './usecasehome/usecasehome.component';
 
 const appRoutes: Routes = [
   {
+    path: '',
+    component: UseCaseHomeComponent
+  },
+  {
     path: 'login',
     component: LoginComponent
   },

@@ -15,15 +15,17 @@ export class AppComponent {
   users: Array<any>;
   currentUser: string
 
-  constructor(private _authService: AuthService,
-              private router: Router) {
-    this.getCurrentUser()
+  constructor(private _authService: AuthService, private router: Router) {
+    // On app contruction, we should figure out if we are logged in
+    this.getCurrentUser();
   }
 
   // Checks if a user is logged in via AuthService
   getCurrentUser() {
     if (this._authService.isLoggedIn()) {
       this.currentUser = localStorage.getItem('name');
+    } else {
+      this.router.navigateByUrl('/login');
     }
   }
 
