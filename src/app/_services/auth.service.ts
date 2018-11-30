@@ -46,6 +46,10 @@ export class AuthService {
     localStorage.removeItem('name');
   }
 
+  public getID() {
+    return localStorage.getItem('_id');
+  }
+
   public isLoggedIn() {
     return moment().isBefore(this.getExpiration());
   }
