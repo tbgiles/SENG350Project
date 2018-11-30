@@ -31,6 +31,14 @@ let response = {
   message: null
 }
 
+const verifyAdmin = (token) => {
+  let username = "";
+  jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => {
+    username = decoded.name;
+  });
+  return (username == "Admin");
+}
+
 // Get users
 router.get('/users', (req, res) => {
   connection((db) => {
@@ -87,6 +95,77 @@ router.get('/user/edit/:userId', (req, res) => {
         sendError(err, res);
       });
   });
+});
+
+// Takes a 'newUser' User in body and creates it in the database.
+router.post('/user/create', (req, res) => {
+  const newUserName = req.body.name;
+  if (!verifyAdmin(req.headers.authorization)) {
+    console.log("UNAUTHORIZED ACCESS");
+    res.status(501).send({"message": "Not Authorized"});
+  } else {
+    connection((db) => {
+      db.collection('users')
+        .insertOne({
+          "name": newUserName,
+          "role": "user",
+          "projects": []
+        })
+        .then(() => {
+          res.status(200).send({"message" : "OK"});
+        })
+        .catch((err) => {
+          console.dir(err);
+          sendError(err, res);
+        });
+    });
+  }
+});
+
+// Takes a _id in body and updates it in the database.
+router.post('/user/update', (req, res) => {
+  const user = req.body;
+  if (!verifyAdmin(req.headers.authorization)) {
+    console.log("UNAUTHORIZED ACCESS");
+    res.status(501).send({"message": "Not Authorized"});
+  } else {
+    connection((db) => {
+      db.collection('users')
+        .updateOne({
+          _id:ObjectID(user._id)
+        },{
+          $set: {"name":user.name}
+        })
+        .then(() => {
+          res.status(200).send({"message" : "OK"});
+        })
+        .catch((err) => {
+          console.dir(err);
+          sendError(err, res);
+        });
+    });
+  }
+});
+
+// Takes a _id in body and deletes it from the database.
+router.post('/user/delete', (req, res) => {
+  const userID = req.body._id;
+  if (!verifyAdmin(req.headers.authorization)) {
+    console.log("UNAUTHORIZED ACCESS");
+    res.status(501).send({"message": "Not Authorized"});
+  } else {
+    connection((db) => {
+      db.collection('users')
+        .deleteOne({_id:ObjectID(userID)})
+        .then(() => {
+          res.status(200).send({"message" : "OK"});
+        })
+        .catch((err) => {
+          console.dir(err);
+          sendError(err, res);
+        });
+    });
+  }
 });
 
 

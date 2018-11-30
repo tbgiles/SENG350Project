@@ -34,11 +34,11 @@ export class AdminComponent implements OnInit {
     var object = new User();
     object.name = newUser[0].value ?  newUser[0].value : "Untitled";
     object.role = "user"
-    this._dataService.submitUser(object);
+    this._dataService.createUser(object);
   }
 
   dropUser(){
-    this._dataService.dropUser(this.selectedUser);
+    this._dataService.deleteUser(this.selectedUser);
   }
 
 }

@@ -28,7 +28,8 @@ const loginRoute = (req, res) => {
   const name = req.body.name;
   const jwtBearerToken = jwt.sign({
     exp: Math.floor(Date.now() / 1000) + (60 * 60),
-    _id: _id
+    _id: _id,
+    name: name
   }, RSA_PRIVATE_KEY, {
     algorithm: 'RS256'
   })

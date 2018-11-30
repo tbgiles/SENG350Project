@@ -1,15 +1,11 @@
-<div *ngFor="let user of users">
-  {{user.name}}
-</div>
-
-<h1>System USers</h1>
+<h1>System Users</h1>
 <div class="usecase-container">
   <ul class="usecase">
       <li *ngFor="let user of users"
           [class.selected]="user === selectedUser"
           (click)="onSelect(user)">
         <span>{{ user.name }}</span></li>
-        <li class="createNewButton" *ngIf="canEdit" (click)="userCreateModal.open();"> Create a New User</li>
+        <li class="createNewButton" (click)="userCreateModal.open();"> Create a New User</li>
   </ul>
 </div>
 <div class="bottomSelectedBox" *ngIf="selectedUser">

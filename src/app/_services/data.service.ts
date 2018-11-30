@@ -44,8 +44,8 @@ export class DataService {
     this._http.post<Project>('/api/submit/project', project).subscribe((obj)=> {console.log(obj)});
   }
 
-  submitUser(user: User){
-    this._http.post<User>('/api/submit/user', user).subscribe((obj) => {console.log(obj)});
+  createUser(user: User){
+    this._http.post<User>('/api/user/create', user).subscribe((obj) => {console.log(obj)});
   }
 
   updateUseCase(useCase: UseCase){
@@ -57,7 +57,7 @@ export class DataService {
   }
 
   updateUser(user: User){
-    this._http.post<User>('/api/update/user', user).subscribe((obj) => {console.log(obj)});
+    this._http.post<User>('/api/user/update', user).subscribe((obj) => {console.log(obj)});
   }
 
   dropUseCase(useCase: UseCase){
@@ -68,7 +68,7 @@ export class DataService {
     this._http.post<Project>('/api/drop/project', project).subscribe((obj)=>{console.log(obj)});
   }
 
-  dropUser(user: User){
-    this._http.post<User>('/api/drop/user', user).subscribe((obj) => {console.log(obj)});
+  deleteUser(user: User){
+    this._http.post<User>('/api/user/delete', user).subscribe((obj) => {console.log(obj)});
   }
 }
