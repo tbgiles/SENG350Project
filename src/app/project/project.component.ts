@@ -20,6 +20,7 @@ export class ProjectComponent implements OnInit {
   useCases: Array<UseCase>;
   selectedUseCase: UseCase;
   projectID: any
+  owner:string;
 
   constructor(private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
     this.actr.data.subscribe(res => {
@@ -35,8 +36,17 @@ export class ProjectComponent implements OnInit {
     this._dataService.getProject(this.projectID)
     .subscribe((res: response) => {
       this.project = res.data;
-      this.useCaseIds = this.project.useCases;
-      this.retProjectUseCases();
+      this.project.users.forEach((user: any) => {
+        if(user.permission == "owner"){
+          // This user should be displayed as our owner
+          this._dataService.getUser(user._id).subscribe((res2:response)=>{
+            this.owner = res2.data.name;
+            this.useCaseIds = this.project.useCases;
+            this.retProjectUseCases();
+          });
+        }
+      });
+
     });
   }
 

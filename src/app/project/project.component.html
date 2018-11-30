@@ -1,4 +1,4 @@
-<div *ngIf="project"><h1>{{project.title | uppercase}}</h1></div>
+<div *ngIf="project && owner"><h1>{{project.title | uppercase}}</h1><h2>Owner: {{owner | uppercase}}</h2></div>
 <div class="usecase-container">
   <ul class="usecase">
     <li *ngFor="let usecase of useCases"

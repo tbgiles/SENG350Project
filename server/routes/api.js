@@ -54,12 +54,13 @@ router.get('/user/:userId', (req, res) => {
   connection((db) => {
     db.collection('users')
       .find({
-        'userId': Number(req.params.userId)
+        _id: ObjectID(req.params.userId)
       })
       .toArray()
       .then((user) => {
         res.setHeader('Content-Type', 'application/json');
         response.data = user[0]; // We are assuming there is no duplicate data.
+        console.dir(response.data);
         res.json(response);
       })
       .catch((err) => {
@@ -243,13 +244,21 @@ router.post('/update/usecase', (req, res) => {
 router.post('/drop/usecase', (req, res) => {
   let useCaseID = req.body._id;
   const token = req.headers.authorization;
+
   let userID = "";
   jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => {
     userID = decoded._id;
   });
-  connection((db) => {
-    db.collection('usecases').deleteOne({_id:ObjectID(useCaseID)});
-    db.collection('projects').updateOne({ _id: ObjectID(req.body.project) },{ $pull: { 'useCases': { _id: ObjectID(useCaseID) } } });
+  connection((db)=>{
+    db.collection('users').findOne({_id: ObjectID(userID)})
+      .then(user => {
+        user.projects.forEach( project => {
+          if(project._id == projectID && (project.permission == "write" || project.permission == "owner")){
+            db.collection('usecases').deleteOne({_id:ObjectID(useCaseID)});
+            db.collection('projects').updateOne({ _id: ObjectID(req.body.project) },{ $pull: { 'useCases': { _id: ObjectID(useCaseID) } } });
+          }
+        });
+      });
   });
   res.status(200).send({"message" : "OK"});
 });
