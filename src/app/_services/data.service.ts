@@ -47,6 +47,10 @@ export class DataService {
     this._http.post<UseCase>('/api/update/usecase', useCase).subscribe((obj)=>{console.log(obj)});
   }
 
+  updateProject(project: Project){
+    this._http.post<Project>('/api/update/project', project).subscribe((obj)=>{console.log(obj)});
+  }
+
   dropUseCase(useCase: UseCase){
     this._http.post<UseCase>('/api/drop/usecase', useCase).subscribe((obj)=>{console.log(obj)});
   }
