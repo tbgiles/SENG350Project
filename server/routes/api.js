@@ -191,13 +191,25 @@ router.get('/usecase/:useCaseID',(req, res)=>{
 
 router.post('/submit/usecase', (req, res) => {
   delete req.body._id; // Make sure there's no attached ID
-  let owningProject = req.body.project;
+  let projectID = req.body.project;
 
-  connection((db) => {
-    db.collection('usecases').insertOne(req.body, (err, respObj) => {
-      db.collection('projects').updateOne({_id:ObjectID(owningProject)}, {$push:{"useCases":{"_id":respObj.insertedId}}});
-    });
+  const token = req.headers.authorization;
+  let userID = "";
+  jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => {
+    userID = decoded._id;
+  });
 
+  connection((db)=>{
+    db.collection('users').findOne({_id: ObjectID(userID)})
+      .then(user => {
+        user.projects.forEach( project => {
+          if(project._id == projectID && (project.permission == "write" || project.permission == "owner")){
+            db.collection('usecases').insertOne(req.body, (err, respObj) => {
+              db.collection('projects').updateOne({_id:ObjectID(projectID)}, {$push:{"useCases":{"_id":respObj.insertedId}}});
+            });
+          }
+        });
+      });
   });
   res.status(200).send({"message" : "OK"});
 });
@@ -232,19 +244,37 @@ router.post ('/submit/project', (req,res) => {
 
 router.post('/update/usecase', (req, res) => {
   let useCaseID = req.body._id;
+  let projectID = req.body.project;
+
+  const token = req.headers.authorization;
+  let userID = "";
+  jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => {
+    userID = decoded._id;
+  });
+
   delete req.body._id;
   delete req.body.project;
 
-  connection((db) => {
-    db.collection('usecases').updateOne({_id:ObjectID(useCaseID)}, {$set: req.body}, (err, respObj) => {});
-
+  connection((db)=>{
+    db.collection('users').findOne({_id: ObjectID(userID)})
+      .then(user => {
+        user.projects.forEach( project => {
+          if(project._id == projectID && (project.permission == "write" || project.permission == "owner")){
+            db.collection('usecases').updateOne({_id:ObjectID(useCaseID)}, {$set: req.body}, (err, respObj) => {});
+          }
+        });
+      });
   });
   res.status(200).send({"message" : "OK"});
 });
 
 router.post('/drop/usecase', (req, res) => {
   let useCaseID = req.body._id;
-  console.log(req.body);
+  const token = req.headers.authorization;
+  let userID = "";
+  jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => {
+    userID = decoded._id;
+  });
   connection((db) => {
     db.collection('usecases').deleteOne({_id:ObjectID(useCaseID)});
     db.collection('projects').updateOne({ _id: ObjectID(req.body.project) },{ $pull: { 'useCases': { _id: ObjectID(useCaseID) } } });
