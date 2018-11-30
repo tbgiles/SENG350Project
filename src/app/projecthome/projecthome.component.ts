@@ -69,7 +69,7 @@ export class ProjectHomeComponent implements OnInit {
         arr.push ({
             "user": user,
             "permission": permission
-          });
+        });
       }
     }
 
