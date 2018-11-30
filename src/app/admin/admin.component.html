@@ -1,3 +1,53 @@
 <div *ngFor="let user of users">
   {{user.name}}
 </div>
+
+<h1>System USers</h1>
+<div class="usecase-container">
+  <ul class="usecase">
+      <li *ngFor="let user of users"
+          [class.selected]="user === selectedUser"
+          (click)="onSelect(user)">
+        <span>{{ user.name }}</span></li>
+        <li class="createNewButton" *ngIf="canEdit" (click)="userCreateModal.open();"> Create a New User</li>
+  </ul>
+</div>
+<div class="bottomSelectedBox" *ngIf="selectedUser">
+  <h2>{{selectedUser.title | uppercase}} Selected</h2>
+  <button class="select-button" (click)="userEditModal.open();">Edit User</button>
+  <button class="select-button" (click)="deleteConf.open();">Delete User</button>
+</div>
+
+<modal #userCreateModal class="userCreateModal">
+  <ng-template #modalHeader><h2>Create User</h2></ng-template>
+  <ng-template #modalBody>
+    <form id="userCreateForm">
+      Name:<br>
+      <input type="text" name="name" id="name"><br>
+      <button class="cusButton" mat-button (click)="createUser()">Submit</button>
+      <button class="cusButton" mat-button (click)="userEditModal.close()">Cancel</button>
+    </form>
+  </ng-template>
+</modal>
+
+<modal #userEditModal class="userEditModal">
+  <ng-template #modalHeader><h2>Edit User</h2></ng-template>
+  <ng-template #modalBody>
+    <form id="userEditForm">
+      Name:<br>
+      <input type="text" name="name" id="name"><br>
+      <button class="cusButton" mat-button (click)="updateUser()">Submit</button>
+      <button class="cusButton" mat-button (click)="userEditModal.close()">Cancel</button>
+    </form>
+  </ng-template>
+</modal>
+
+<modal #deleteConf class="deleteConf">
+  <ng-template #modalHeader><h2>Delete User?</h2></ng-template>
+  <ng-template #modalBody>
+    <form>
+      <button class="cusButton" mat-button (click)="dropUser()">Confirm</button>
+      <button class="cusButton" mat-button (click)="deleteConf.close()">Cancel</button>
+    </form>
+  </ng-template>
+</modal>

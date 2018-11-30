@@ -12,6 +12,7 @@ import { response } from '../response';
 export class AdminComponent implements OnInit {
 
   users: Array<User>;
+  selectedUser: User
 
   constructor(private _dataService: DataService) {
     _dataService.getUsers()
@@ -21,6 +22,23 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  onSelect(user: User){
+    this.selectedUser = user;
+  }
+
+  createUser(){
+    var newUser = document.getElementById("userCreateForm");
+
+    var object = new User();
+    object.name = newUser[0].value ?  newUser[0].value : "Untitled";
+    object.role = "user"
+    this._dataService.submitUser(object);
+  }
+
+  dropUser(){
+    this._dataService.dropUser(this.selectedUser);
   }
 
 }
