@@ -202,6 +202,34 @@ router.post('/submit/usecase', (req, res) => {
   res.status(200).send({"message" : "OK"});
 });
 
+router.post ('/submit/project', (req,res) => {
+    connection ((db) => {
+      const token = req.headers.authorization;
+      let userID = "";
+      let arr = [];
+      let index = 0; // Need to use index due to JS asynchronous
+      jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
+        userID = decoded._id;
+      });
+
+      for (var i = 0; i < req.body.users.length; i++){
+          db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
+          if (userID != respObj._id)
+            arr.push ({"_id": respObj._id, "permission": req.body.users[index++].permission});  //Format it to push into projects
+        });
+      }
+
+       db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
+        arr.push ({"_id": userID, "permission": "owner"});
+         db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
+         for (var i = 0; i < arr.length; i++){
+           db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
+         }
+      });
+
+    });
+});
+
 router.post('/update/usecase', (req, res) => {
   let useCaseID = req.body._id;
   delete req.body._id;
