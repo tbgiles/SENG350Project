@@ -37,7 +37,13 @@ export class AdminComponent implements OnInit {
     this._dataService.createUser(object);
   }
 
-  dropUser(){
+  updateUser(){
+    var existingUser = document.getElementById("userEditForm");
+    this.selectedUser.name = existingUser[0].value ?  existingUser[0].value : "Untitled";
+    this._dataService.updateUser(this.selectedUser);
+  }
+
+  deleteUser(){
     this._dataService.deleteUser(this.selectedUser);
   }
 
