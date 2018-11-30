@@ -18,7 +18,7 @@ matt = users.insert_one({"name":"Matt", "role":"user", "projects":[]})
 amrit = users.insert_one({"name":"Amrit", "role":"user", "projects":[]})
 geena = users.insert_one({"name":"Geena", "role":"user", "projects":[]})
 jens = users.insert_one({"name":"Dr Jens Weber - UML Master", "role":"user", "projects":[]})
- 
+
 
 # -------------------- projects --------------------
 
@@ -57,7 +57,7 @@ projects.update_one({"title":"project 2"},{'$push': {"users": {"_id":amrit.inser
 
 projects.update_one({"title":"project 3"},{'$push': {"users": {"_id":geena.inserted_id, "permission":"owner"}}})
 projects.update_one({"title":"project 3"},{'$push': {"users": {"_id":tristan.inserted_id, "permission":"write"}}})
-projects.update_one({"title":"project 3"},{'$push': {"users": {"_id":amrit.inserted_id, "permission":"write"}}})
+projects.update_one({"title":"project 3"},{'$push': {"users": {"_id":amrit.inserted_id, "permission":"read"}}})
 
 
 # -------------------- use cases --------------------
