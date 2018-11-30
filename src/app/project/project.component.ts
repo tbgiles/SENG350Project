@@ -19,9 +19,10 @@ export class ProjectComponent implements OnInit {
   useCaseIds: Array<any>;
   useCases: Array<UseCase>;
   selectedUseCase: UseCase;
-  projectID: any
+  projectID: any;
+  canEdit: boolean;
 
-  constructor(private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
+  constructor(private _authService: AuthService, private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
     this.actr.data.subscribe(res => {
       this.projectID = res.project;
       this.useCases = new Array();
@@ -35,6 +36,11 @@ export class ProjectComponent implements OnInit {
     this._dataService.getProject(this.projectID)
     .subscribe((res: response) => {
       this.project = res.data;
+      this.project.users.forEach((user: any) => {
+        if (user._id == this._authService.getID()) {
+          user.permission != "read" ? this.canEdit = true : this.canEdit = false;
+        }
+      });
       this.useCaseIds = this.project.useCases;
       this.retProjectUseCases();
     });
