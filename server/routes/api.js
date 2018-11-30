@@ -39,25 +39,12 @@ const verifyAdmin = (token) => {
   return (username == "Admin");
 }
 
-// Get users
-router.get('/users', (req, res) => {
-  connection((db) => {
-    db.collection('users')
-      .find()
-      .toArray()
-      .then((users) => {
-        res.setHeader('Content-Type', 'application/json');
-        response.data = users;
-        res.json(response);
-      })
-      .catch((err) => {
-        sendError(err, res);
-      });
-  });
-});
+
+/*
+  USER CONTROL
+*/
 
 // Get single user
-// TODO: Make userId a unique value for each document
 router.get('/user/:userId', (req, res) => {
   connection((db) => {
     db.collection('users')
@@ -67,7 +54,7 @@ router.get('/user/:userId', (req, res) => {
       .toArray()
       .then((user) => {
         res.setHeader('Content-Type', 'application/json');
-        response.data = user[0]; // We are assuming there is no duplicate data.
+        response.data = user;
         console.dir(response.data);
         res.json(response);
       })
@@ -77,18 +64,15 @@ router.get('/user/:userId', (req, res) => {
   });
 });
 
-// Edit a single user
-// TODO: Make userId a unique value for each document
-router.get('/user/edit/:userId', (req, res) => {
+// Get users
+router.get('/users', (req, res) => {
   connection((db) => {
     db.collection('users')
-      .find({
-        'userId': Number(req.params.userId)
-      })
+      .find()
       .toArray()
-      .then((user) => {
+      .then((users) => {
         res.setHeader('Content-Type', 'application/json');
-        response.data = user[0]; // We are assuming there is no duplicate data.
+        response.data = users;
         res.json(response);
       })
       .catch((err) => {
@@ -169,6 +153,25 @@ router.post('/user/delete', (req, res) => {
 });
 
 
+/*
+  PROJECT CONTROL
+*/
+
+// Get a single project
+router.get('/projects/:projectID',(req, res)=>{
+  connection((db) => {
+    db.collection('projects').findOne({_id: ObjectID(req.params.projectID)})
+    .then((project) => {
+      res.setHeader('Content-Type', 'application/json');
+      response.data = project;
+      res.json(response);
+    })
+    .catch((err) => {
+      sendError(err, res);
+    });
+  });
+});
+
 // Get all projects a user is associated with
 router.get('/projects', (req, res)=>{
   // Validate the user's identity using their JWT
@@ -199,7 +202,87 @@ router.get('/projects', (req, res)=>{
   });
 });
 
-// This is for the requirement of having an overview page of usecases.
+// Create a new project
+router.post ('/project/create', (req,res) => {
+    connection ((db) => {
+      let arr = [];
+      let index = 0; // Need to use index due to JS asynchronous
+      const token = req.headers.authorization;
+      let userID = "";
+      jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
+        userID = decoded._id;
+      });
+      for (var i = 0; i < req.body.users.length; i++){
+          db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
+          if (userID != respObj._id)
+            arr.push ({"_id": respObj._id, "permission": req.body.users[index++].permission});  //Format it to push into projects
+        });
+      }
+       db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
+        arr.push ({"_id": userID, "permission": "owner"});
+         db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
+         for (var i = 0; i < arr.length; i++){
+           db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
+         }
+      });
+    });
+});
+
+// Update an existing project
+router.post ('/project/update', (req,res) => {
+    connection ((db) => {
+      let arr = [];
+      let index = 0; // Need to use index due to JS asynchronous
+      const token = req.headers.authorization;
+      let userID = "";
+      jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
+        userID = decoded._id;
+      });
+      for (var i = 0; i < req.body.users.length; i++){
+          db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
+          if (userID != respObj._id)
+            arr.push ({"_id": respObj._id, "permission": req.body.users[index++].permission});  //Format it to push into projects
+        });
+      }
+       db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
+        arr.push ({"_id": userID, "permission": "owner"});
+         db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
+         for (var i = 0; i < arr.length; i++){
+           db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
+         }
+      });
+    });
+});
+
+// Delete a project
+router.post('/project/delete', (req,res) => {
+
+  // PLACEHOLDER
+
+  res.status(200).send({"message": "ok"});
+});
+
+
+/*
+  USE CASE CONTROL
+*/
+
+// Get a single use case
+router.get('/usecase/:useCaseID',(req, res)=>{
+  connection((db) => {
+    db.collection('usecases').findOne({_id: ObjectID(req.params.useCaseID)})
+    .then((useCase) => {
+      res.setHeader('Content-Type', 'application/json');
+      response.data = useCase;
+      res.json(response);
+    })
+    .catch((err) => {
+      sendError(err, res);
+    });
+  });
+});
+
+// Get all use cases associated with a user
 router.get('/usecases', (req, res)=>{
   // Validate the user's identity using their JWT
   const token = req.headers.authorization;
@@ -240,36 +323,7 @@ router.get('/usecases', (req, res)=>{
   });
 });
 
-router.get('/projects/:projectID',(req, res)=>{
-  connection((db) => {
-    db.collection('projects').findOne({_id: ObjectID(req.params.projectID)})
-    .then((project) => {
-      res.setHeader('Content-Type', 'application/json');
-      response.data = project;
-      res.json(response);
-    })
-    .catch((err) => {
-      sendError(err, res);
-    });
-  });
-});
-
-// Get a single use case
-router.get('/usecase/:useCaseID',(req, res)=>{
-  connection((db) => {
-    db.collection('usecases').findOne({_id: ObjectID(req.params.useCaseID)})
-    .then((useCase) => {
-      res.setHeader('Content-Type', 'application/json');
-      response.data = useCase;
-      res.json(response);
-    })
-    .catch((err) => {
-      sendError(err, res);
-    });
-  });
-});
-
-router.post('/submit/usecase', (req, res) => {
+router.post('/usecase/create', (req, res) => {
   delete req.body._id; // Make sure there's no attached ID
   let projectID = req.body.project;
 
@@ -294,32 +348,8 @@ router.post('/submit/usecase', (req, res) => {
   res.status(200).send({"message" : "OK"});
 });
 
-router.post ('/submit/project', (req,res) => {
-    connection ((db) => {
-      let arr = [];
-      let index = 0; // Need to use index due to JS asynchronous
-      const token = req.headers.authorization;
-      let userID = "";
-      jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
-        userID = decoded._id;
-      });
-      for (var i = 0; i < req.body.users.length; i++){
-          db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
-          if (userID != respObj._id)
-            arr.push ({"_id": respObj._id, "permission": req.body.users[index++].permission});  //Format it to push into projects
-        });
-      }
-       db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-        arr.push ({"_id": userID, "permission": "owner"});
-         db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
-         for (var i = 0; i < arr.length; i++){
-           db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
-         }
-      });
-    });
-});
 
-router.post('/update/usecase', (req, res) => {
+router.post('/usecase/update', (req, res) => {
   let useCaseID = req.body._id;
   let projectID = req.body.project;
 
@@ -345,32 +375,9 @@ router.post('/update/usecase', (req, res) => {
   res.status(200).send({"message" : "OK"});
 });
 
-router.post ('/update/project', (req,res) => {
-    connection ((db) => {
-      let arr = [];
-      let index = 0; // Need to use index due to JS asynchronous
-      const token = req.headers.authorization;
-      let userID = "";
-      jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
-        userID = decoded._id;
-      });
-      for (var i = 0; i < req.body.users.length; i++){
-          db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
-          if (userID != respObj._id)
-            arr.push ({"_id": respObj._id, "permission": req.body.users[index++].permission});  //Format it to push into projects
-        });
-      }
-       db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-        arr.push ({"_id": userID, "permission": "owner"});
-         db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
-         for (var i = 0; i < arr.length; i++){
-           db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
-         }
-      });
-    });
-});
 
-router.post('/drop/usecase', (req, res) => {
+
+router.post('/usecase/delete', (req, res) => {
   let projectID = req.body.project;
   let useCaseID = req.body._id;
   const token = req.headers.authorization;

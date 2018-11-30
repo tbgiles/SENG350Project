@@ -88,7 +88,7 @@ export class ProjectComponent implements OnInit {
     oldUseCase[12].value = this.selectedUseCase.subVariations;
   }
 
-  submitNewUseCase(){
+  createNewUseCase(){
     var newUseCase = document.getElementById("useCaseForm");
 
     var object = new UseCase();
@@ -106,10 +106,10 @@ export class ProjectComponent implements OnInit {
     object.description = newUseCase[10].value;
     object.extensions = newUseCase[11].value;
     object.subVariations = newUseCase[12].value;
-    this._dataService.submitUseCase(object);
+    this._dataService.createUseCase(object);
   }
 
-  submitOldUseCase(){
+  createOldUseCase(){
     var oldUseCase = document.getElementById("existingUseCaseForm");
 
     var object = new UseCase();
@@ -131,7 +131,7 @@ export class ProjectComponent implements OnInit {
     this._dataService.updateUseCase(object);
   }
 
-  dropUseCase(){
-    this._dataService.dropUseCase(this.selectedUseCase);
+  deleteUseCase(){
+    this._dataService.deleteUseCase(this.selectedUseCase);
   }
 }

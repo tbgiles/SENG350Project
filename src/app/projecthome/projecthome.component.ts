@@ -76,7 +76,7 @@ export class ProjectHomeComponent implements OnInit {
    object.title = ProjectInfo[0].value;
    object.users = arr;
    object.useCases = [];
-   this._dataService.submitProject(object);
+   this._dataService.createProject(object);
 
   }
 
