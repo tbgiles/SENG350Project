@@ -22,7 +22,7 @@
       Title:<br>
       <input type="text" name="title"><br><br>
 
-      <table class ="center" id="myTable">
+      <table class ="center" id="permissionsTable">
 
         <tr>
           <th> User </th>
@@ -31,7 +31,7 @@
         </tr>
 
         <tr *ngFor="let user of users; let i = index">
-          <td> {{user.name}} </td>
+          <td id = "user{{i}}"> {{user.name}} </td>
           <td> <input type="checkbox" id = "read{{i}}" value = ""> </td>
           <td> <input type="checkbox" id = "write{{i}}" value = ""> </td>
         </tr>
