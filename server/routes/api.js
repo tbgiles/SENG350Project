@@ -116,7 +116,7 @@ router.post('/user/update', (req, res) => {
         .updateOne({
           _id:ObjectID(user._id)
         },{
-          $set: {"name":user.name}
+          $set: {"name":user.name.trim()}
         })
         .then(() => {
           res.status(200).send({"message" : "OK"});
@@ -212,13 +212,17 @@ router.post ('/project/create', (req,res) => {
         userID = decoded._id;
       });
       for (var i = 0; i < req.body.users.length; i++){
-          db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
+        console.log(req.body.users[i].user.trim());
+          db.collection('users').findOne({name: req.body.users[i].user.trim()}).then(respObj => { // Get Each User's ID
+          console.dir(respObj);
           if (userID != respObj._id)
-            arr.push ({"_id": respObj._id, "permission": req.body.users[index++].permission});  //Format it to push into projects
-        });
+            arr.push ({"_id": ObjectID(respObj._id), "permission": req.body.users[index++].permission});  //Format it to push into projects
+        }).catch((err)=>{
+          console.log("project/create error");
+      });
       }
        db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-        arr.push ({"_id": userID, "permission": "owner"});
+        arr.push ({"_id": ObjectID(userID), "permission": "owner"});
          db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
          for (var i = 0; i < arr.length; i++){
            db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
@@ -240,11 +244,11 @@ router.post ('/project/update', (req,res) => {
       for (var i = 0; i < req.body.users.length; i++){
           db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
           if (userID != respObj._id)
-            arr.push ({"_id": respObj._id, "permission": req.body.users[index++].permission});  //Format it to push into projects
+            arr.push ({"_id": ObjectID(respObj._id), "permission": req.body.users[index++].permission});  //Format it to push into projects
         });
       }
        db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-        arr.push ({"_id": userID, "permission": "owner"});
+        arr.push ({"_id": ObjectID(userID), "permission": "owner"});
          db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
          for (var i = 0; i < arr.length; i++){
            db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
@@ -277,6 +281,35 @@ router.post('/project/delete', (req,res) => {
       .catch((err) => {
         sendError(err, res);
       })
+  });
+});
+
+router.post('/project/transfer', (req,res) => {
+  let donorID = req.body.donor;
+  let recipientID = req.body.recipient;
+  let projectID = req.body.project;
+  connection ((db) => {
+    let arr = [];
+    let index = 0; // Need to use index due to JS asynchronous
+    const token = req.headers.authorization;
+    let userID = "";
+    jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
+      userID = decoded._id;
+    });
+    console.dir(donorID);
+    console.dir(recipientID);
+    console.dir(projectID);
+    db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : ObjectID(donorID)}, {$set:{"users.$.permission":"write"}});
+    db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : ObjectID(recipientID)}, {$set:{"users.$.permission":"owner"}});
+    db.collection("users").updateOne({_id:ObjectID(donorID), "projects._id" : ObjectID(projectID)}, {$set:{"projects.$.permission":"write"}});
+    db.collection("users").updateOne({_id:ObjectID(recipientID), "projects._id" : ObjectID(projectID)}, {$set:{"projects.$.permission":"owner"}});
+    //  db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
+    //   arr.push ({"_id": userID, "permission": "owner"});
+    //    db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
+    //    for (var i = 0; i < arr.length; i++){
+    //      db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
+    //    }
+    // });
   });
 });
 

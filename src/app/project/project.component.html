@@ -1,5 +1,6 @@
 <div *ngIf="project"><h1>{{project.title | uppercase}}</h1><h2>Owner: {{owner | uppercase}}</h2></div>
-<button class="select-button" *ngIf="canEdit" (click)="deleteProjectConf.open()">Delete Project</button>
+<button class="select-button" *ngIf="canEdit && isOwner" (click)="deleteProjectConf.open()">Delete Project</button>
+<button class="select-button" *ngIf="isOwner" (click)="transferProjectModal.open()">Transfer Ownership</button>
 <div class="usecase-container">
   <ul class="usecase">
     <li *ngFor="let usecase of useCases"
@@ -103,6 +104,22 @@
     <form>
       <button class="cusButton" mat-button (click)="deleteProject()">Confirm</button>
       <button class="cusButton" mat-button (click)="deleteConf.close()">Cancel</button>
+    </form>
+  </ng-template>
+</modal>
+
+<modal #transferProjectModal class="transferProjectModal">
+  <ng-template #modalHeader><h2>Transfer {{project.title}}?</h2></ng-template>
+  <ng-template #modalBody>
+    <form>
+      <ul class="users">
+        <li *ngFor="let user of users"
+          [class.selected]="user === selectedTransferOwner"
+          (click)="onSelectUser(user)">
+          {{ user.name }}</li>
+      </ul>
+      <button class="cusButton" mat-button (click)="transferProject()">Confirm</button>
+      <button class="cusButton" mat-button (click)="transferProjectModal.close()">Cancel</button>
     </form>
   </ng-template>
 </modal>

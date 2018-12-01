@@ -4,6 +4,7 @@ import { AuthService } from '../_services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router'
 import { Project } from '../project';
 import { UseCase } from '../usecase';
+import { User } from '../user';
 import { ProjectResolver } from './project-resolver.service';
 import { map } from 'rxjs/operators';
 import { response } from '../response';
@@ -18,16 +19,22 @@ export class ProjectComponent implements OnInit {
   project: Project;
   useCaseIds: Array<any>;
   useCases: Array<UseCase>;
+  users: Array<User>;
   selectedUseCase: UseCase;
+  selectedTransferOwner: User;
   projectID: any;
   canEdit: boolean;
+  isOwner: boolean;
   owner: string;
 
   constructor(private _authService: AuthService, private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
     this.actr.data.subscribe(res => {
       this.projectID = res.project;
-      this.useCases = new Array();
-      this.retProjectInfo();
+      this._dataService.getUsers().subscribe((res: response)=>{
+          this.users = res.data;
+          this.useCases = new Array();
+          this.retProjectInfo();
+      });
     });
   }
 
@@ -49,6 +56,7 @@ export class ProjectComponent implements OnInit {
         }
         if (user._id == this._authService.getID()) {
           user.permission != "read" ? this.canEdit = true : this.canEdit = false;
+          user.permission == "owner" ? this.isOwner = true : this.isOwner = false;
         }
       });
 
@@ -71,8 +79,21 @@ export class ProjectComponent implements OnInit {
     this.selectedUseCase = usecase;
   }
 
+  onSelectUser(user: User){
+    this.selectedTransferOwner = user;
+  }
+
   deleteProject() {
     this._dataService.deleteProject(this.project);
+  }
+
+  transferProject(){
+    let transfer = {
+      donor: String(this._authService.getID()),
+      recipient: this.selectedTransferOwner._id,
+      project: this.projectID
+    };
+    this._dataService.transferProject(transfer);
   }
 
   populateData(){

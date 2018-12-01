@@ -46,15 +46,19 @@ export class DataService {
   }
 
   createProject (project: Project){
-    this._http.post<Project>('/api/project/create', project).subscribe((obj)=> {console.log(obj)});
+    this._http.post<Project>('/api/project/create', project).subscribe();
   }
 
   updateProject(project: Project){
-    this._http.post<Project>('/api/project/update', project).subscribe((obj)=>{console.log(obj)});
+    this._http.post<Project>('/api/project/update', project).subscribe();
   }
 
   deleteProject(project: Project){
-    this._http.post<Project>('/api/project/delete', project).subscribe((obj)=>{console.log(obj)});
+    this._http.post<Project>('/api/project/delete', project).subscribe();
+  }
+
+  transferProject(transferObj: any){
+    this._http.post<any>('/api/project/transfer', transferObj).subscribe();
   }
 
   // USE CASE CONTROL
