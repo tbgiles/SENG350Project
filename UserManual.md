@@ -1,7 +1,3 @@
-to do:
-- add screenshots
-- fill in set up section
-
 # Functional Software Requirements Application  
 
 *Matthew Fortier, Tristan Giles, Amritijot Madahar, Geena Smith*
@@ -39,40 +35,91 @@ Once the database is set up, we can run the application:
   
 The application will now be running on "localhost:3000".  
 
-
 ## Logging in
-Upon running the app and navigating to the home page, a list of users will be visible. To log in as a specific user, select the user from the list and click the "log in" button. This will redirect to an overview page of all the use cases the user has permissions on.  
+Upon running the app and navigating to the home page, a list of users will be visible. To log in as a specific user, select the user from the list and click the "log in" button.  
   
+![](usermanual_images/login_selected.png)
+  
+This will redirect to an overview page of all the use cases the user has permissions on.  
+  
+![](usermanual_images/allusecases_overview.png)  
+
 ## Logging Out  
 To log out from an account, simply select the "log out" button in the upper right hand corner.  
+  
+![](usermanual_images/allusecases_overview.png)
 
 ## Creating a User
-In order to create a user, you must first be logged in as "admin". (add more here) 
+In order to create a user, you must first be logged in as "Admin". After being redirected from the log-in page, select the "Account Management" tab from the upper right corner, and a page of all the current users will be displayed, as well as an option to create a user. Select the "create a new user" option and ... (finish when it is created).
  
 ## Deleting a User
-In order to delete a user, you must first be logged in as "admin". (Add more here)
+In order to delete a user, you must first be logged in as "Admin", and on the "Account Management" page of the application. Select the user that should be deleted from the list of all users. ... (finish when it is created)
 
 ## Creating a Project
-To create a project, first log in by selecting the user from the home page. Once on the use case overview page, select the "Projects" tab in the top right of the page. This will redirect to a page of all the existing projects the user has permissions for. This will also display an option to create a new project. Selecting this option will open a modal with a form to create a new project. Fill in the project title and select permissions for the desired users. To create the project,   
+To create a project, first log in as the user who the project will be initially owned by. Once logged in, select the "Projects" tab in the upper right corner, which will redirect to a page showing all projects owned by the logged-in user, as well as an option to create a new project.  
+  
+![](usermanual_images/projects_overview.png)  
+
+Select the option to "Create a new project" which will display a modal with a form to enter the information for a new project. Fill in the title of the project and select the project permissions for other users. Once this information is entered, select the "submit" button at the bottom of the modal.  
+  
+![](usermanual_images/create_project_modal.png) 
+  
+The newly created project will now be visible in the projects overview page.  
+  
+(Need to add image)
 
 
 ## Viewing a Project
-To view a project, first log in by selecting the user from the home page. Upon logging in, you will be shown a list of existing projects that the user either owns or has permission to view or edit. To view a specific project, select it from the view of projects, and you will be shown the specific project and it's use cases.
+To view a project, first log in as the desired user. Navigate to the projects overview page using the "projects" tab in the upper right. The projects overview page will be a list of projects that the user either owns or has read or write permissions on.  
+  
+To view a specific project, select it from the list and the page will redirect to an overview of the use cases associated with the project.  
+(add images when done)
 
 ## Editing a Project
+(TO DO)  
 
 ## Deleting a Project
+(TO DO)  
 
 ## Changing Project Permissions
+(TO DO)  
 
 ## Changing Project Ownership
+(TO DO)  
 
 ## Creating a Use Case
+To create a use case first log in and navigate to the projects overview page. From the list of project, either select or create the project the new use case will be associated with, and select the option to view the project. Note that this option will only be possible if the logged-in user owns or has write permissions on the project.  
+  
+![](usermanual_images/usecases_overview.png)  
+  
+On the use case overview page for the selected project, select "Create a new use case". This will open a modal with a form to enter information for the new use case. Once the information is filled in, select "submit" at the bottom of the modal. 
+   
+![](usermanual_images/usecase_create.png)  
+    
+The newly created use case will now be visible in the use case overview page for both the individual project and for all projects (through selecting the "use cases" tab).  
+  
+(add image)
 
 ## Editing a Use Case
+To edit a use case, first log in as the desired user and locate the desired use case either from the page of all use cases, or through selecting a project from the projects page. Select the use case that is to be edited and select "view usecase". A modal will open displaying a form that is prepopulated with the existing information.  
+
+![](usermanual_images/usecase_view.png)  
+  
+Edit the information as desired and select the "submit" button. Note that the "submit" button will only be visible and the use case will only be updated if the user has write permissions for the project.  
 
 ## Deleting a Use Case
+To delete a use case, first log in as the owner of the use case to be deleted and locate the desired use case either from the page of all use cases, or through selecting a project from the projects page. Select the use case that is to be deleted and select "delete usecase".  
+  
+![](usermanual_images/usecase_delete.png)
 
 ## Searching for a Use Case
+To search for an existing use case, first log in as the desired user. The use case overview page will display a search bar that can be used to search for a use case.  
+  
+![](usermanual_images/allusecases_overview.png)  
+  
+The page will update to show only matching use cases that the user has ownership, read, or write permissions on as the user types. Note that this search bar is case sensitive (Changing?).  
+  
+![](usermanual_images/usecases_search.png)
 
 ## Known Problems and Limitations
+(TO DO)
