@@ -1,4 +1,5 @@
-<div *ngIf="project && owner"><h1>{{project.title | uppercase}}</h1><h2>Owner: {{owner | uppercase}}</h2></div>
+<div *ngIf="project"><h1>{{project.title | uppercase}}</h1><h2>Owner: {{owner | uppercase}}</h2></div>
+<button class="select-button" *ngIf="canEdit" (click)="deleteProjectConf.open()">Delete Project</button>
 <div class="usecase-container">
   <ul class="usecase">
     <li *ngFor="let usecase of useCases"
@@ -91,6 +92,16 @@
   <ng-template #modalBody>
     <form>
       <button class="cusButton" mat-button (click)="deleteUseCase()">Confirm</button>
+      <button class="cusButton" mat-button (click)="deleteConf.close()">Cancel</button>
+    </form>
+  </ng-template>
+</modal>
+
+<modal #deleteProjectConf class="deleteConf">
+  <ng-template #modalHeader><h2>Delete {{project.title}}?</h2></ng-template>
+  <ng-template #modalBody>
+    <form>
+      <button class="cusButton" mat-button (click)="deleteProject()">Confirm</button>
       <button class="cusButton" mat-button (click)="deleteConf.close()">Cancel</button>
     </form>
   </ng-template>

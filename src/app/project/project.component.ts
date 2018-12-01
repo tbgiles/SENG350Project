@@ -71,6 +71,10 @@ export class ProjectComponent implements OnInit {
     this.selectedUseCase = usecase;
   }
 
+  deleteProject() {
+    this._dataService.deleteProject(this.project);
+  }
+
   populateData(){
     var oldUseCase = document.getElementById("existingUseCaseForm");
     oldUseCase[0].value = this.selectedUseCase.title;

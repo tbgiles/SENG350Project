@@ -48,14 +48,12 @@ const verifyAdmin = (token) => {
 router.get('/user/:userId', (req, res) => {
   connection((db) => {
     db.collection('users')
-      .find({
+      .findOne({
         _id: ObjectID(req.params.userId)
       })
-      .toArray()
       .then((user) => {
         res.setHeader('Content-Type', 'application/json');
         response.data = user;
-        console.dir(response.data);
         res.json(response);
       })
       .catch((err) => {
@@ -142,6 +140,7 @@ router.post('/user/delete', (req, res) => {
       db.collection('users')
         .deleteOne({_id:ObjectID(userID)})
         .then(() => {
+//          db.collection('projects').delete()
           res.status(200).send({"message" : "OK"});
         })
         .catch((err) => {
@@ -256,10 +255,29 @@ router.post ('/project/update', (req,res) => {
 
 // Delete a project
 router.post('/project/delete', (req,res) => {
-
-  // PLACEHOLDER
-
-  res.status(200).send({"message": "ok"});
+  let projectID = req.body._id;
+  connection ((db) => {
+    db.collection('projects').findOne({_id: ObjectID(projectID)})
+      .then((project) => {
+        let promises = [];
+        project.useCases.forEach((useCase) => {
+          promises.push(db.collection('usecases').deleteOne({_id: useCase._id}));
+        });
+        project.users.forEach((user) => {
+          promises.push(db.collection('users').updateOne({_id: user._id},{
+            $pull: {'projects': {_id: project._id}}
+          }));
+        });
+        promises.push(db.collection('projects').deleteOne({_id: project._id}));
+        Promise.all(promises)
+          .then(() => {
+            res.status(200).send({"message" : "OK"});
+          });
+      })
+      .catch((err) => {
+        sendError(err, res);
+      })
+  });
 });
 
 
