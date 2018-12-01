@@ -303,13 +303,6 @@ router.post('/project/transfer', (req,res) => {
     db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : ObjectID(recipientID)}, {$set:{"users.$.permission":"owner"}});
     db.collection("users").updateOne({_id:ObjectID(donorID), "projects._id" : ObjectID(projectID)}, {$set:{"projects.$.permission":"write"}});
     db.collection("users").updateOne({_id:ObjectID(recipientID), "projects._id" : ObjectID(projectID)}, {$set:{"projects.$.permission":"owner"}});
-    //  db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-    //   arr.push ({"_id": userID, "permission": "owner"});
-    //    db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
-    //    for (var i = 0; i < arr.length; i++){
-    //      db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
-    //    }
-    // });
   });
 });
 

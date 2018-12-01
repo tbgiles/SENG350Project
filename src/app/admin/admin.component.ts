@@ -17,7 +17,12 @@ export class AdminComponent implements OnInit {
   constructor(private _dataService: DataService) {
     _dataService.getUsers()
       .subscribe((res: response) => {
-        this.users = res.data;
+        this.users = [];
+        for(var i = 0; i < res.data.length;i++){
+          if(res.data[i].name != "Admin"){
+            this.users.push(res.data[i]);
+          }
+        }
       });
   }
 

@@ -17,7 +17,7 @@ export class ProjectHomeComponent implements OnInit {
   projects: Array<Project>;
   selectedProject: Project;
 
-  constructor(private _dataService: DataService, private router: Router) {
+  constructor(private _authService: AuthService, private _dataService: DataService, private router: Router) {
     this.selectedProject = null;
     this.getProjects();
     this.getUsers();
@@ -29,7 +29,13 @@ export class ProjectHomeComponent implements OnInit {
   getUsers(): void {
     this._dataService.getUsers()
       .subscribe((res: response) => {
-        this.users = res.data;
+        this.users = [];
+        let currentLoggedIn = this._authService.getID();
+        for(var i = 0; i < res.data.length; i++){
+          if(res.data[i]._id != currentLoggedIn){
+            this.users.push(res.data[i]);
+          }
+        }
       });
   }
 
