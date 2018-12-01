@@ -203,31 +203,28 @@ router.get('/projects', (req, res)=>{
 
 // Create a new project
 router.post ('/project/create', (req,res) => {
+  const project = req.body;
     connection ((db) => {
-      let arr = [];
-      let index = 0; // Need to use index due to JS asynchronous
-      const token = req.headers.authorization;
-      let userID = "";
-      jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
-        userID = decoded._id;
-      });
-      for (var i = 0; i < req.body.users.length; i++){
-        console.log(req.body.users[i].user.trim());
-          db.collection('users').findOne({name: req.body.users[i].user.trim()}).then(respObj => { // Get Each User's ID
-          console.dir(respObj);
-          if (userID != respObj._id)
-            arr.push ({"_id": ObjectID(respObj._id), "permission": req.body.users[index++].permission});  //Format it to push into projects
-        }).catch((err)=>{
-          console.log("project/create error");
-      });
-      }
-       db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-        arr.push ({"_id": ObjectID(userID), "permission": "owner"});
-         db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
-         for (var i = 0; i < arr.length; i++){
-           db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
-         }
-      });
+      db.collection('projects').insertOne(project)
+        .then((obj) => {
+          promises = [];
+          project.users.forEach((user) => {
+            promises.push(db.collection('users').updateOne({_id: ObjectID(user._id)}, {
+              $push: {"projects": {"_id": project._id, "permission": user.permission}}
+            }));
+          });
+          Promise.all(promises)
+            .then((data) => {
+              res.status(200).send({"message" : "OK"});
+            })
+            .catch((err) => {
+              console.dir(err);
+            })
+        })
+        .catch((err) => {
+          console.dir(err);
+          sendError(err, res);
+        })
     });
 });
 
@@ -240,7 +237,7 @@ router.post ('/project/update', (req,res) => {
       let userID = "";
       jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
         userID = decoded._id;
-      });
+      })
       for (var i = 0; i < req.body.users.length; i++){
           db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
           if (userID != respObj._id)
