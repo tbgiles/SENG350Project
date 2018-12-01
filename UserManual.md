@@ -19,13 +19,32 @@ The web application described in this manual was build as a project for SENG 350
 - The app must provide an overview page that lists all use cases accessible by a user and allows the user to search for use cases.  
   
 ## Set Up
-The application source files can be found on github here (add hyperlink later).  
-add:
-- how to set up database (if needed)
-- steps to run the app
+The application source files can be found in a github repository here (add hyperlink later).  
+  
+To be able to run the application, the following dependencies must be installed (*check these to make sure we dont need to add/remove any*):  
+- TypeScript  
+- Node  
+- Express  
+- MongoDB  
+- Python3  
+  
+Before running the application, the database must be initialized by completing the following steps:  
+- from a terminal, run the command "mongod" to run the database
+- from a separate terminal, run the file "scripts/dbinit.py". This file will create the database structure and add the "Admin" user.  
+  
+Once the database is set up, we can run the application:  
+- Start the database using the "mongod" command  
+- Build the application using "ng build" in a separate terminal.  
+- Launch the application using "node server.js".  
+  
+The application will now be running on "localhost:3000".  
+
 
 ## Logging in
-Upon running the app and navigating to the home page, a list of users will be visible. To log in as a specific user, select the user from the list and click the "log in" button.
+Upon running the app and navigating to the home page, a list of users will be visible. To log in as a specific user, select the user from the list and click the "log in" button. This will redirect to an overview page of all the use cases the user has permissions on.  
+  
+## Logging Out  
+To log out from an account, simply select the "log out" button in the upper right hand corner.  
 
 ## Creating a User
 In order to create a user, you must first be logged in as "admin". (add more here) 
@@ -34,7 +53,8 @@ In order to create a user, you must first be logged in as "admin". (add more her
 In order to delete a user, you must first be logged in as "admin". (Add more here)
 
 ## Creating a Project
-To create a project, first log in by selecting the user from the home page. Upon logging in, you will be shown a list of existing projects as well as an option to create a project. Select the option to create a new project. The system will display a blank form to enter project details. Enter the project information including the name, (add other parameters here). Once the project information has been filled in, select the option to create the project, and you will be redirected back to the project overview page and the new project will be visible. 
+To create a project, first log in by selecting the user from the home page. Once on the use case overview page, select the "Projects" tab in the top right of the page. This will redirect to a page of all the existing projects the user has permissions for. This will also display an option to create a new project. Selecting this option will open a modal with a form to create a new project. Fill in the project title and select permissions for the desired users. To create the project,   
+
 
 ## Viewing a Project
 To view a project, first log in by selecting the user from the home page. Upon logging in, you will be shown a list of existing projects that the user either owns or has permission to view or edit. To view a specific project, select it from the view of projects, and you will be shown the specific project and it's use cases.
