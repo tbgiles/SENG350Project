@@ -89,7 +89,7 @@ router.post('/user/create', (req, res) => {
     connection((db) => {
       db.collection('users')
         .insertOne({
-          "name": newUserName,
+          "name": newUserName.trim(), // trim username so we can search later
           "role": "user",
           "projects": []
         })
@@ -116,7 +116,7 @@ router.post('/user/update', (req, res) => {
         .updateOne({
           _id:ObjectID(user._id)
         },{
-          $set: {"name":user.name.trim()}
+          $set: {"name":user.name.trim()} // trim username so we can search later
         })
         .then(() => {
           res.status(200).send({"message" : "OK"});
