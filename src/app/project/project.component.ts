@@ -86,6 +86,7 @@ export class ProjectComponent implements OnInit {
 
   deleteProject() {
     this._dataService.deleteProject(this.project);
+    this.router.navigateByUrl("/projects");
   }
 
   transferProject(){
