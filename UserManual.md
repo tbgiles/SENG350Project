@@ -75,17 +75,17 @@ To view a project, first log in as the desired user. Navigate to the projects ov
 To view a specific project, select it from the list and the page will redirect to an overview of the use cases associated with the project.  
 (add images when done)
 
-## Editing a Project
-(TO DO)  
+## Editing a Project (refine when implemented)
+To edit a project, first log in as a user who is either the owner or has write permissions for the project. Navigate to the projects page with an overview of all projects associated with the user. Select the desired project and the "edit project" button. A modal will open on the current page with the project information. Update the information and click confirm.  
 
 ## Deleting a Project
-(TO DO)  
+To delete a project, first log in as the user who owns the project that is to be deleted and navigate to the projects page with the list of all projects associated with the user. Select the desired project and the option to view the project. From the list of use cases associated with the project, select the "delete project" button and confirm the deletion.   
 
-## Changing Project Permissions
-(TO DO)  
+## Changing Project Permissions (refine when implemented)
+To change the permissions on a project, first log in as the user who owns the project. Navigate to the projects page with the list of all projects associated with the user, select the desired project, and the "edit project" button. A modal will open on the current page with the current project permissions. Update the permissions and click confirm.   
 
 ## Changing Project Ownership
-(TO DO)  
+To change a project's ownership, first log in as the user who owns the project and navigate to the projects page with the list of all projects associated with the user. Select the desired project and the option to view the project. From the list of use cases associated with the project, select the "transfer ownership" button and a modal will be displayed on the current page to select the new owner. Select the new owner from the list of users who currently have read or write permissions, and click confirm.   
 
 ## Creating a Use Case
 To create a use case first log in and navigate to the projects overview page. From the list of project, either select or create the project the new use case will be associated with, and select the option to view the project. Note that this option will only be possible if the logged-in user owns or has write permissions on the project.  
