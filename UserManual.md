@@ -67,20 +67,21 @@ After starting the application and navigating to the above link, the user will b
 
 ![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/login_selected.PNG)
 
-This will redirect to an overview page of all the use cases the user has permissions on.  
+After logging in, the user will be redirected to an overview page. On this page will be all use cases that the current user has any access rights to (read/write/owner).
 
 ![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/allusecases_overview.PNG)  
 
 ## Logging Out  
-To log out from an account, simply select the "log out" button in the upper right hand corner.  
+Once logged in, a user can log out at any time by simply selecting the "log out" button in the upper right hand corner, pictured below.
 
 ![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/allusecases_overview.PNG)
 
 ## Creating a User
-In order to create a user, you must first be logged in as "Admin". After being redirected from the log-in page, select the "Account Management" tab from the upper right corner, and a page of all the current users will be displayed, as well as an option to create a user. Select the "create a new user" option and ... (finish when it is created).
+To create a new user, the user must first be logged in to the "Admin" account. After logging in, the user will be redirected to the overview page, but will also be shown an "Account Management" tab in the upper right corner. By clicking on this tab, the Admin user will be brought to another page, showing all current users in the system, as well as the options to create and delete users. Selecting the latter, a modal will appear, prompting the user to give the new user a name. Submitting this will create the new user, and enable new users to select this account at login.
 
 ## Deleting a User
-In order to delete a user, you must first be logged in as "Admin", and on the "Account Management" page of the application. Select the user that should be deleted from the list of all users. ... (finish when it is created)
+To delete a user, the process is similar to creating a user. The user must first be logged in as the "Admin" account, and must navigate to the "Account Management" page of the application. From the list of existing users, the Admin will select the user that they would like to deleted. After selecting this user and clicking the delete button, a confirmation modal will appear, and will allow the user to either confirm or cancel the deletion. The former will remove the user and all owned projects, whereas the latter will cancel the action and close the modal. The deletion button is shown below.
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/accountManagement.png)
 
 ## Creating a Project
 To create a project, first log in as the user who the project will be initially owned by. Once logged in, select the "Projects" tab in the upper right corner, which will redirect to a page showing all projects owned by the logged-in user, as well as an option to create a new project.  
