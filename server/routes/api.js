@@ -293,9 +293,6 @@ router.post('/project/transfer', (req,res) => {
     jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
       userID = decoded._id;
     });
-    console.dir(donorID);
-    console.dir(recipientID);
-    console.dir(projectID);
     db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : donorID}, {$set:{"users.$.permission":"write"}});
     db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : recipientID}, {$set:{"users.$.permission":"owner"}});
     db.collection("users").updateOne({_id:ObjectID(donorID), "projects._id" : ObjectID(projectID)}, {$set:{"projects.$.permission":"write"}});
