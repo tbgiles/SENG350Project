@@ -3,6 +3,7 @@ export class Project {
   title: string;
   users: Array<Object>;
   useCases: Array<string>; // Array of ObjectID's
+  description: string;
 }
 
 /*

@@ -23,6 +23,8 @@
     <form id="newProjectForm">
       Title:<br>
       <input type="text" name="title"><br><br>
+      Description:<br>
+      <textarea type="text" name="description" id="description" style="height: 60px;" cols="40" rows="5" form="newProjectForm"></textarea><br>
 
       <table class ="center" id="permissionsTable">
 
@@ -48,10 +50,12 @@
 <modal #projectUpdateModal class="projectUpdateModal">
   <ng-template #modalHeader><h2>Update Project</h2></ng-template>
   <ng-template #modalBody>
-    <p>Fill in Related Use Case Information</p>
+    <p>Fill in Related Project Information</p>
     <form id="newProjectForm">
       Title:<br>
-      <input type="text" name="title"><br><br>
+      <input type="text" name="title" value={{this.selectedProject.title}}><br><br>
+      Description:<br>
+      <textarea type="text" name="description" id="description" style="height: 60px;" cols="40" rows="5" form="newProjectForm" value={{this.selectedProject.description}}></textarea><br>
 
       <table class ="center" id="permissionsTable">
 

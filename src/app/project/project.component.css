@@ -63,6 +63,11 @@ h2{
   text-align: center;
 }
 
+h3{
+  width: 100%;
+  text-align: center;
+}
+
 .select-button{
   background-color: #465FB9;
   color: white;

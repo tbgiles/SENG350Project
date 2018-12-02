@@ -23,9 +23,9 @@ jens = users.insert_one({"name":"Dr Jens Weber - UML Master", "role":"user", "pr
 # -------------------- projects --------------------
 
 # project json
-p1 = {"title":"project 1", "users":[], "useCases":[]}
-p2 = {"title":"project 2", "users":[], "useCases":[]}
-p3 = {"title":"project 3", "users":[], "useCases":[]}
+p1 = {"title":"project 1", "users":[], "useCases":[], "description":"default description 1"}
+p2 = {"title":"project 2", "users":[], "useCases":[], "description":"default description 2"}
+p3 = {"title":"project 3", "users":[], "useCases":[], "description":"default description 3"}
 
 p1i = projects.insert_one(p1)
 p2i = projects.insert_one(p2)
