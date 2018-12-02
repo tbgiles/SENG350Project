@@ -131,19 +131,63 @@ router.post('/user/update', (req, res) => {
 
 // Takes a _id in body and deletes it from the database.
 router.post('/user/delete', (req, res) => {
-  const userID = req.body._id;
+  const deletingUser = req.body;
   if (!verifyAdmin(req.headers.authorization)) {
     console.log("UNAUTHORIZED ACCESS");
     res.status(501).send({"message": "Not Authorized"});
   } else {
     connection((db) => {
-      db.collection('users')
-        .deleteOne({_id:ObjectID(userID)})
-        .then(() => {
-//          db.collection('projects').delete()
-          res.status(200).send({"message" : "OK"});
+      const ownedProjects = []; // For all projects the user owns
+      const affectedProjects = []; // For all other projects the user has permissiosn in
+      const affectedUsers = []; // For all other users with permissions in this user's owned projects
+      deletingUser.projects.forEach((project) => {
+        if (project.permission == "owner") {
+          ownedProjects.push(ObjectID(project._id));
+        } else {
+          affectedProjects.push(ObjectID(project._id));
+        }
+      });
+      db.collection('projects').find({_id: {$in: ownedProjects}})
+        .toArray()
+        .then((projects) => {
+          projects.forEach((project) => {
+            project.users.forEach((user) => {
+              if (user.permission != "owner") {
+                affectedUsers.push(user._id);
+              }
+            });
+          });
+          let promises = [];
+          // Remove all owned projects
+          promises.push(db.collection('projects').deleteMany({_id: {$in: ownedProjects}}));
+          // Remove all permissions for deleting user from other projects
+          affectedProjects.forEach((project) => {
+            promises.push(db.collection('projects').updateOne({_id: project}, {
+              $pull: {'users': {_id: ObjectID(deletingUser._id)}}
+            }));
+          });
+          // Remove all permissions for other users from deleting user's owned projects
+          affectedUsers.forEach((user) => {
+            promises.push(db.collection('users').updateOne({_id: user}, {
+              $pull: {'projects': {_id: {$in: ownedProjects}}}
+            }));
+          });
+          // Delete user.
+          promises.push(db.collection('users').deleteOne({_id: ObjectID(deletingUser._id)}));
+          // Submit all database queries
+          console.dir(promises);
+          Promise.all(promises)
+            .then((data) => {
+              res.status(200).send({"message" : "OK"});
+            })
+            .catch((err) => {
+              console.log("OH NOES");
+              console.dir(err);
+              sendError(err, res);
+            });
         })
         .catch((err) => {
+          console.log("OH NOES2");
           console.dir(err);
           sendError(err, res);
         });
