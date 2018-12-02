@@ -61,6 +61,7 @@ export class ProjectHomeComponent implements OnInit {
           userID = user._id;
         }
       });
+      console.log("Authservice ID = " + this._authService.getID());
       if (userID == this._authService.getID()) continue; // We'll add our own ownership.
       arr.push ({
           "_id": userID,
