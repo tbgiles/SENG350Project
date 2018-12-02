@@ -72,6 +72,43 @@ export class ProjectHomeComponent implements OnInit {
    this._dataService.createProject(object);
   }
 
+  updateProject(){
+
+    const ProjectInfo = document.getElementById ("newProjectForm");
+    let object = new Project();
+    let arr = [];
+    const table = (<HTMLTableElement>document.getElementById("permissionsTable")).rows;
+
+    for (var i = 0; i < table.length-1; i++){
+      const username = (<HTMLInputElement>document.getElementById ("user" + (i))).innerText;
+      const readPriv = (<HTMLInputElement>document.getElementById ("read" + (i))).checked;
+      const writePriv = (<HTMLInputElement>document.getElementById ("write" + (i))).checked;
+      if (!writePriv && !readPriv) continue; // Nothing was ticked for this user.
+      let permission = writePriv ? "write" : "read";
+      let userID = '';
+      this.users.forEach((user) => {
+        if (user.name == username) {
+          userID = user._id;
+        }
+      });
+      if (userID == this._authService.getID()) continue; // We'll add our own ownership.
+      arr.push ({
+          "_id": userID,
+          "permission": permission
+      });
+    }
+    arr.push({
+      "_id": this._authService.getID(),
+      "permission": "owner"
+    })
+
+    object._id = document.getElementById ("toUpdate").innerText;
+    object.title = ProjectInfo[0].value.length > 0 ? ProjectInfo[0].value : "Untitled";
+    object.users = arr;
+    object.useCases = [];
+    this._dataService.updateProject (object);
+}
+
   openProject(){
     let projectToOpen = this.selectedProject;
     sessionStorage.currentProject = projectToOpen._id;
