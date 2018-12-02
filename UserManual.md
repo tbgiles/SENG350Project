@@ -115,11 +115,11 @@ To delete a use case, first log in as the owner of the use case to be deleted an
 ## Searching for a Use Case
 To search for an existing use case, first log in as the desired user. The use case overview page will display a search bar that can be used to search for a use case.  
   
-![](usermanual_images/allusecases_overview.png)  
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/allusecases_overview.PNG)  
   
 The page will update to show only matching use cases that the user has ownership, read, or write permissions on as the user types. Note that this search bar is case sensitive (Changing?).  
   
-![](usermanual_images/usecases_search.png)
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/usecases_search.PNG)
 
 ## Known Problems and Limitations
 (TO DO)
