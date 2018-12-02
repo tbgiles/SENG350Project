@@ -1,13 +1,14 @@
 # SENG350Project
-A shared repo for the SENG 350 project
-## Directory Information:
-- The configuration file that loads up OUR app is server.js
-- Our central application file is app.ts (src/app/app.module.ts)
-- Routes are built in the routes folder, and are implementations of the base route. See index.ts for how to create a new routes
-- Static files likes images and stylesheets are in the 'public' folder
+Associated source code for the SENG 350 Fall 2018 Design Project
 
+## User Manual
+[Click Me!](https://github.com/tbgiles/SENG350Project/blob/master/UserManual.md)
 
-## TODO:
-- Test the datbase functionality
-- HTML styling
-- Documentation (We could do alot of it along the way in this readme or whatever you all think is best)
+## Description
+This application provides a user interface around a use case and project tracking database. A user can create projects, and under these projects create use cases to model conditions of use for design applications.
+
+## Contributers:
+- [Matt Fortier](https://github.com/mjfortier)
+- [Geena Smith](https://github.com/geenasmith)
+- [Amritjot Madahar](https://github.com/amritjotm)
+- [Tristan Giles](https://github.com/tbgiles)
