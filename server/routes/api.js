@@ -131,19 +131,63 @@ router.post('/user/update', (req, res) => {
 
 // Takes a _id in body and deletes it from the database.
 router.post('/user/delete', (req, res) => {
-  const userID = req.body._id;
+  const deletingUser = req.body;
   if (!verifyAdmin(req.headers.authorization)) {
     console.log("UNAUTHORIZED ACCESS");
     res.status(501).send({"message": "Not Authorized"});
   } else {
     connection((db) => {
-      db.collection('users')
-        .deleteOne({_id:ObjectID(userID)})
-        .then(() => {
-//          db.collection('projects').delete()
-          res.status(200).send({"message" : "OK"});
+      const ownedProjects = []; // For all projects the user owns
+      const affectedProjects = []; // For all other projects the user has permissiosn in
+      const affectedUsers = []; // For all other users with permissions in this user's owned projects
+      deletingUser.projects.forEach((project) => {
+        if (project.permission == "owner") {
+          ownedProjects.push(ObjectID(project._id));
+        } else {
+          affectedProjects.push(ObjectID(project._id));
+        }
+      });
+      db.collection('projects').find({_id: {$in: ownedProjects}})
+        .toArray()
+        .then((projects) => {
+          projects.forEach((project) => {
+            project.users.forEach((user) => {
+              if (user.permission != "owner") {
+                affectedUsers.push(user._id);
+              }
+            });
+          });
+          let promises = [];
+          // Remove all owned projects
+          promises.push(db.collection('projects').deleteMany({_id: {$in: ownedProjects}}));
+          // Remove all permissions for deleting user from other projects
+          affectedProjects.forEach((project) => {
+            promises.push(db.collection('projects').updateOne({_id: project}, {
+              $pull: {'users': {_id: ObjectID(deletingUser._id)}}
+            }));
+          });
+          // Remove all permissions for other users from deleting user's owned projects
+          affectedUsers.forEach((user) => {
+            promises.push(db.collection('users').updateOne({_id: user}, {
+              $pull: {'projects': {_id: {$in: ownedProjects}}}
+            }));
+          });
+          // Delete user.
+          promises.push(db.collection('users').deleteOne({_id: ObjectID(deletingUser._id)}));
+          // Submit all database queries
+          console.dir(promises);
+          Promise.all(promises)
+            .then((data) => {
+              res.status(200).send({"message" : "OK"});
+            })
+            .catch((err) => {
+              console.log("OH NOES");
+              console.dir(err);
+              sendError(err, res);
+            });
         })
         .catch((err) => {
+          console.log("OH NOES2");
           console.dir(err);
           sendError(err, res);
         });
@@ -184,7 +228,7 @@ router.get('/projects', (req, res)=>{
     db.collection('users').findOne({_id: ObjectID(userID)})
       .then(user => {
         let projectList = [];
-        user.projects.forEach(project => projectList.push(project._id));
+        user.projects.forEach(project => projectList.push(ObjectID(project._id)));
         // Retrieve the projects matching those IDs.
         db.collection('projects').find({_id: {$in: projectList}})
           .toArray()
@@ -210,7 +254,7 @@ router.post ('/project/create', (req,res) => {
           promises = [];
           project.users.forEach((user) => {
             promises.push(db.collection('users').updateOne({_id: ObjectID(user._id)}, {
-              $push: {"projects": {"_id": project._id, "permission": user.permission}}
+              $push: {"projects": {"_id":project._id, "permission": user.permission}}
             }));
           });
           Promise.all(promises)
@@ -233,30 +277,29 @@ router.post ('/project/update', (req,res) => {
   const project = req.body;
   let promises = [];
   connection((db) => {
-   db.collection('projects').findOne ({_id: ObjectID (project._id.trim())}) // Find the project to Update
-    .then ((obj) => {
+   db.collection('projects').findOne ({_id: ObjectID (project._id.trim())}).then ((obj) => { // Find the project to Update
       promises.push (db.collection('projects').replaceOne({_id:ObjectID(project._id.trim())}, // Replace it with the new user list
       {"useCases": obj.useCases, "users": project.users , "title": project.title}));
       obj.users.forEach ((user)=>{ // For each previous user
-        db.collection ('users').findOne ({_id: ObjectID(user._id)}) // Find user
-        .then ((user) =>{
+        promises.push(db.collection ('users').findOne ({_id: ObjectID(user._id)}).then ((user) =>{
             let index = user.projects.findIndex(function(i){ return JSON.stringify(i._id) === JSON.stringify(obj._id);}); //Splice out the project we're updating
             let arr = user.projects;
-            if (index != -1){
-              arr.splice (index, 1);
-            }
+            if (index != -1){arr.splice (index, 1);}
             promises.push (db.collection('users').replaceOne({_id:ObjectID(user._id)}, {"role": user.role, "name": user.name, "projects": arr}));
-        }).then (() => {
-          for (var i = 0; i < project.users.length; i++){
-            console.log (project.users[i].name);
-            promises.push (db.collection('users').updateOne({_id:ObjectID(project.users[i]._id)}, {$push: {"projects": {"_id": obj._id, "permission": project.users[i].permission}}}));
-          }
-        });
-      })
-    });
+        }));
+      });
+      Promise.all (promises).then (() => {
+        project.users.forEach ((user) =>{
+         db.collection('users').findOne ({_id: ObjectID (user._id.trim())}).then ((obj) => {
+          db.collection('users').updateOne({_id: obj._id}, {
+             $push: {"projects": {"_id":ObjectID(project._id.trim()), "permission": user.permission}}
+           });
+         });
+       });
+      });
+    })
   });
 });
-
 // Delete a project
 router.post('/project/delete', (req,res) => {
   let projectID = req.body._id;
@@ -296,23 +339,12 @@ router.post('/project/transfer', (req,res) => {
     jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
       userID = decoded._id;
     });
-    console.dir(donorID);
-    console.dir(recipientID);
-    console.dir(projectID);
-    db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : ObjectID(donorID)}, {$set:{"users.$.permission":"write"}});
-    db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : ObjectID(recipientID)}, {$set:{"users.$.permission":"owner"}});
+    db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : donorID}, {$set:{"users.$.permission":"write"}});
+    db.collection("projects").updateOne({_id:ObjectID(projectID), "users._id" : recipientID}, {$set:{"users.$.permission":"owner"}});
     db.collection("users").updateOne({_id:ObjectID(donorID), "projects._id" : ObjectID(projectID)}, {$set:{"projects.$.permission":"write"}});
     db.collection("users").updateOne({_id:ObjectID(recipientID), "projects._id" : ObjectID(projectID)}, {$set:{"projects.$.permission":"owner"}});
-    //  db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-    //   arr.push ({"_id": userID, "permission": "owner"});
-    //    db.collection("projects").replaceOne ({"_id":ObjectID(respObj.insertedId)}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
-    //    for (var i = 0; i < arr.length; i++){
-    //      db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
-    //    }
-    // });
   });
 });
-
 
 /*
   USE CASE CONTROL
@@ -346,7 +378,7 @@ router.get('/usecases', (req, res)=>{
     db.collection('users').findOne({_id: ObjectID(userID)})
       .then(user => {
         let projectList = [];
-        user.projects.forEach(project => projectList.push(project._id));
+        user.projects.forEach(project => projectList.push(ObjectID(project._id)));
         // Retrieve the projects matching those IDs.
         db.collection('projects').find({_id: {$in: projectList}})
           .toArray()
@@ -354,7 +386,7 @@ router.get('/usecases', (req, res)=>{
             let useCaseList = [];
             projects.forEach(project => {
               project.useCases.forEach(useCase => {
-                useCaseList.push(useCase._id);
+                useCaseList.push(ObjectID(useCase._id));
               });
             });
             // Retrieve all use cases associated with these projects.

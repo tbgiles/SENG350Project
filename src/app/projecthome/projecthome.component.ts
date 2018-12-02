@@ -22,7 +22,13 @@ export class ProjectHomeComponent implements OnInit {
     this.selectedProject = null;
     this._dataService.getUsers()
       .subscribe((res: response) => {
-        this.users = res.data;
+        this.users = [];
+        let currentLoggedIn = this._authService.getID();
+        for(var i = 0; i < res.data.length; i++){
+          if(res.data[i]._id != currentLoggedIn){
+            this.users.push(res.data[i]);
+          }
+        }
       });
     this._dataService.getProjects()
       .subscribe((res: response) => {
@@ -55,6 +61,7 @@ export class ProjectHomeComponent implements OnInit {
           userID = user._id;
         }
       });
+      console.log("Authservice ID = " + this._authService.getID());
       if (userID == this._authService.getID()) continue; // We'll add our own ownership.
       arr.push ({
           "_id": userID,

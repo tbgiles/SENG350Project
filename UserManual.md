@@ -38,16 +38,16 @@ The application will now be running on "localhost:3000".
 ## Logging in
 Upon running the app and navigating to the home page, a list of users will be visible. To log in as a specific user, select the user from the list and click the "log in" button.  
   
-![](usermanual_images/login_selected.png)
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/login_selected.PNG)
   
 This will redirect to an overview page of all the use cases the user has permissions on.  
   
-![](usermanual_images/allusecases_overview.png)  
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/allusecases_overview.PNG)  
 
 ## Logging Out  
 To log out from an account, simply select the "log out" button in the upper right hand corner.  
   
-![](usermanual_images/allusecases_overview.png)
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/allusecases_overview.PNG)
 
 ## Creating a User
 In order to create a user, you must first be logged in as "Admin". After being redirected from the log-in page, select the "Account Management" tab from the upper right corner, and a page of all the current users will be displayed, as well as an option to create a user. Select the "create a new user" option and ... (finish when it is created).
@@ -58,11 +58,11 @@ In order to delete a user, you must first be logged in as "Admin", and on the "A
 ## Creating a Project
 To create a project, first log in as the user who the project will be initially owned by. Once logged in, select the "Projects" tab in the upper right corner, which will redirect to a page showing all projects owned by the logged-in user, as well as an option to create a new project.  
   
-![](usermanual_images/projects_overview.png)  
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/projects_overview.PNG)  
 
 Select the option to "Create a new project" which will display a modal with a form to enter the information for a new project. Fill in the title of the project and select the project permissions for other users. Once this information is entered, select the "submit" button at the bottom of the modal.  
   
-![](usermanual_images/create_project_modal.png) 
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/create_project_modal.PNG) 
   
 The newly created project will now be visible in the projects overview page.  
   
@@ -90,11 +90,11 @@ To view a specific project, select it from the list and the page will redirect t
 ## Creating a Use Case
 To create a use case first log in and navigate to the projects overview page. From the list of project, either select or create the project the new use case will be associated with, and select the option to view the project. Note that this option will only be possible if the logged-in user owns or has write permissions on the project.  
   
-![](usermanual_images/usecases_overview.png)  
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/usecases_overview.PNG)  
   
 On the use case overview page for the selected project, select "Create a new use case". This will open a modal with a form to enter information for the new use case. Once the information is filled in, select "submit" at the bottom of the modal. 
    
-![](usermanual_images/usecase_create.png)  
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/usecase_create.PNG)  
     
 The newly created use case will now be visible in the use case overview page for both the individual project and for all projects (through selecting the "use cases" tab).  
   
@@ -103,23 +103,23 @@ The newly created use case will now be visible in the use case overview page for
 ## Editing a Use Case
 To edit a use case, first log in as the desired user and locate the desired use case either from the page of all use cases, or through selecting a project from the projects page. Select the use case that is to be edited and select "view usecase". A modal will open displaying a form that is prepopulated with the existing information.  
 
-![](usermanual_images/usecase_view.png)  
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/usecase_view.PNG)  
   
 Edit the information as desired and select the "submit" button. Note that the "submit" button will only be visible and the use case will only be updated if the user has write permissions for the project.  
 
 ## Deleting a Use Case
 To delete a use case, first log in as the owner of the use case to be deleted and locate the desired use case either from the page of all use cases, or through selecting a project from the projects page. Select the use case that is to be deleted and select "delete usecase".  
   
-![](usermanual_images/usecase_delete.png)
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/usecase_delete.PNG)
 
 ## Searching for a Use Case
 To search for an existing use case, first log in as the desired user. The use case overview page will display a search bar that can be used to search for a use case.  
   
-![](usermanual_images/allusecases_overview.png)  
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/allusecases_overview.PNG)  
   
 The page will update to show only matching use cases that the user has ownership, read, or write permissions on as the user types. Note that this search bar is case sensitive (Changing?).  
   
-![](usermanual_images/usecases_search.png)
+![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/usecases_search.PNG)
 
 ## Known Problems and Limitations
 (TO DO)

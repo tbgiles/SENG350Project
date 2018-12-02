@@ -30,11 +30,9 @@ export class ProjectComponent implements OnInit {
   constructor(private _authService: AuthService, private _dataService: DataService, private router: Router, private actr: ActivatedRoute) {
     this.actr.data.subscribe(res => {
       this.projectID = res.project;
-      this._dataService.getUsers().subscribe((res: response)=>{
-          this.users = res.data;
-          this.useCases = new Array();
-          this.retProjectInfo();
-      });
+      this.users = [];
+      this.useCases = new Array();
+      this.retProjectInfo();
     });
   }
 
@@ -47,7 +45,6 @@ export class ProjectComponent implements OnInit {
       this.project.users.forEach((user: any) => {
         if(user.permission == "owner"){
           // This user should be displayed as our owner
-
           this._dataService.getUser(user._id).subscribe((res2:response)=>{
             this.owner = res2.data.name;
             this.useCaseIds = this.project.useCases;
@@ -55,9 +52,13 @@ export class ProjectComponent implements OnInit {
           });
         }
         if (user._id == this._authService.getID()) {
+          // If this user is our current user, configure canEdit and isOwner
           user.permission != "read" ? this.canEdit = true : this.canEdit = false;
           user.permission == "owner" ? this.isOwner = true : this.isOwner = false;
         }
+        this._dataService.getUser(user._id).subscribe((res2:response)=>{
+          this.users.push(res2.data);
+        });
       });
 
     });
@@ -85,6 +86,7 @@ export class ProjectComponent implements OnInit {
 
   deleteProject() {
     this._dataService.deleteProject(this.project);
+    this.router.navigateByUrl("/projects");
   }
 
   transferProject(){
