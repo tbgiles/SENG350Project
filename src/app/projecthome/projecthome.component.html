@@ -9,8 +9,10 @@
   </ul>
 </div>
 <div *ngIf="selectedProject">
+  <div hidden id="toUpdate"> {{selectedProject._id}} </div>
   <h2>{{selectedProject.title | uppercase}} Selected</h2>
   <button class="cusButton" class="select-button" mat-button (click)="openProject()">View Project</button>
+  <button *ngIf="canEdit" class="cusButton" class="select-button" mat-button (click)="projectUpdateModal.open()">Update Project</button>
 </div>
 
 <!-- <button (click)="htmlInsideModal.open()">Raw HTML inside modal</button> -->
@@ -44,14 +46,14 @@
 </modal>
 
 <modal #projectUpdateModal class="projectUpdateModal">
-  <ng-template #modalHeader><h2>Create Project</h2></ng-template>
+  <ng-template #modalHeader><h2>Update Project</h2></ng-template>
   <ng-template #modalBody>
     <p>Fill in Related Use Case Information</p>
     <form id="newProjectForm">
       Title:<br>
       <input type="text" name="title"><br><br>
 
-      <table class ="center" id="myTable">
+      <table class ="center" id="permissionsTable">
 
         <tr>
           <th> User </th>
@@ -60,14 +62,14 @@
         </tr>
 
         <tr *ngFor="let user of users; let i = index">
-          <td> {{user.name}} </td>
+          <td id = "user{{i}}"> {{user.name}} </td>
           <td> <input type="checkbox" id = "read{{i}}" value = ""> </td>
           <td> <input type="checkbox" id = "write{{i}}" value = ""> </td>
         </tr>
 
       </table>
 
-      <button class="select-button" mat-button (click)="createProject()">Submit</button> <br>
+      <button class="select-button" mat-button (click)="updateProject()">Submit</button> <br>
     </form>
   </ng-template>
 </modal>

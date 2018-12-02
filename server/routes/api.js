@@ -274,30 +274,32 @@ router.post ('/project/create', (req,res) => {
 
 // Update an existing project
 router.post ('/project/update', (req,res) => {
-    connection ((db) => {
-      let arr = [];
-      let index = 0; // Need to use index due to JS asynchronous
-      const token = req.headers.authorization;
-      let userID = "";
-      jwt.verify(token, RSA_PUBLIC_KEY, (err, decoded) => { // Verify user ID;
-        userID = decoded._id;
-      })
-      for (var i = 0; i < req.body.users.length; i++){
-          db.collection('users').findOne({name: req.body.users[i].user.trim()}, (err, respObj) => { // Get Each User's ID
-          if (userID != respObj._id)
-            arr.push ({"_id": ObjectID(respObj._id), "permission": req.body.users[index++].permission});  //Format it to push into projects
-        });
-      }
-       db.collection ("projects").insertOne ({"useCases": [], "users": [], "title": req.body.title}, (err, respObj) => { // Create a new project
-        arr.push ({"_id": userID, "permission": "owner"});
-         db.collection("projects").replaceOne ({"_id":respObj.insertedId}, {"useCases": req.body.useCases, "users": arr, "title": req.body.title}); // Add in users array
-         for (var i = 0; i < arr.length; i++){
-           db.collection('users').updateOne ({"_id":ObjectID (arr[i]._id)}, {$push:{"projects": {"_id":respObj.insertedId, "permission": arr[i].permission}}}); // Update user projects
-         }
+  const project = req.body;
+  let promises = [];
+  connection((db) => {
+   db.collection('projects').findOne ({_id: ObjectID (project._id.trim())}).then ((obj) => { // Find the project to Update
+      promises.push (db.collection('projects').replaceOne({_id:ObjectID(project._id.trim())}, // Replace it with the new user list
+      {"useCases": obj.useCases, "users": project.users , "title": project.title}));
+      obj.users.forEach ((user)=>{ // For each previous user
+        promises.push(db.collection ('users').findOne ({_id: ObjectID(user._id)}).then ((user) =>{
+            let index = user.projects.findIndex(function(i){ return JSON.stringify(i._id) === JSON.stringify(obj._id);}); //Splice out the project we're updating
+            let arr = user.projects;
+            if (index != -1){arr.splice (index, 1);}
+            promises.push (db.collection('users').replaceOne({_id:ObjectID(user._id)}, {"role": user.role, "name": user.name, "projects": arr}));
+        }));
       });
-    });
+      Promise.all (promises).then (() => {
+        project.users.forEach ((user) =>{
+         db.collection('users').findOne ({_id: ObjectID (user._id.trim())}).then ((obj) => {
+          db.collection('users').updateOne({_id: obj._id}, {
+             $push: {"projects": {"_id":ObjectID(project._id.trim()), "permission": user.permission}}
+           });
+         });
+       });
+      });
+    })
+  });
 });
-
 // Delete a project
 router.post('/project/delete', (req,res) => {
   let projectID = req.body._id;
