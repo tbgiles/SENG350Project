@@ -17,6 +17,7 @@ export class ProjectHomeComponent implements OnInit {
   users: Array<any>;
   projects: Array<Project>;
   selectedProject: Project;
+  canEdit : boolean;
 
   constructor(private _authService: AuthService, private _dataService: DataService, private router: Router) {
     this.selectedProject = null;
@@ -33,7 +34,7 @@ export class ProjectHomeComponent implements OnInit {
     this._dataService.getProjects()
       .subscribe((res: response) => {
         this.projects = res.data;
-      });
+    })
   }
 
   ngOnInit() {
@@ -41,6 +42,13 @@ export class ProjectHomeComponent implements OnInit {
 
   onSelect(project: Project) {
     this.selectedProject = project;
+    const projectID = this.selectedProject._id;
+    this.canEdit = false;
+    this._dataService.getUserString(this._authService.getID().trim()).subscribe ((res:response) => {
+      for (var i = 0; i < res.data.projects.length; i++){
+        if (res.data.projects[i].permission === "owner" && projectID === res.data.projects[i]._id){this.canEdit = true; break;}
+      }
+    })
   }
 
   createProject() {

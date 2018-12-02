@@ -23,6 +23,10 @@ export class DataService {
     return this._http.get('/api/users');
   }
 
+  getUserString(userId: String) {  // String Version of get user
+    return this._http.get('/api/user/' + userId);
+  }
+
   createUser(user: User){
     this._http.post<User>('/api/user/create', user).subscribe((obj) => {console.log(obj)});
   }
