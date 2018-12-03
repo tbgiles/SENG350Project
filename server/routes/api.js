@@ -104,6 +104,11 @@ router.post('/user/create', (req, res) => {
   }
 });
 
+router.post ('/user/invite' , (req, res) => {
+  console.log (req.body);
+});
+
+
 // Takes a _id in body and updates it in the database.
 router.post('/user/update', (req, res) => {
   const user = req.body;

@@ -18,6 +18,7 @@ export class ProjectHomeComponent implements OnInit {
   projects: Array<Project>;
   selectedProject: Project;
   canEdit : boolean;
+  canInvite: boolean;
 
   constructor(private _authService: AuthService, private _dataService: DataService, private router: Router) {
     this.selectedProject = null;
@@ -43,10 +44,14 @@ export class ProjectHomeComponent implements OnInit {
   onSelect(project: Project) {
     this.selectedProject = project;
     const projectID = this.selectedProject._id;
-    this.canEdit = false;
     this._dataService.getUserString(this._authService.getID().trim()).subscribe ((res:response) => {
+      this.canEdit = false;
+      this.canInvite = true;
       for (var i = 0; i < res.data.projects.length; i++){
-        if (res.data.projects[i].permission === "owner" && projectID === res.data.projects[i]._id){this.canEdit = true; break;}
+        if (res.data.projects[i].permission === "owner" && projectID === res.data.projects[i]._id){this.canEdit = true;}
+        if (res.data.projects[i].permission === "read" && projectID === res.data.projects[i]._id){
+          this.canInvite = false;
+        }
       }
     })
   }
@@ -122,7 +127,41 @@ export class ProjectHomeComponent implements OnInit {
     object.users = arr;
     object.useCases = [];
     this._dataService.updateProject (object);
-}
+  }
+
+  inviteUser (){
+    const ProjectInfo = document.getElementById ("newProjectForm");
+    let object = new Project();
+    let arr = [];
+    const table = (<HTMLTableElement>document.getElementById("permissionsTable")).rows;
+
+    for (var i = 0; i < table.length-1; i++){
+      const username = (<HTMLInputElement>document.getElementById ("user" + (i))).innerText;
+      const readPriv = (<HTMLInputElement>document.getElementById ("read" + (i))).checked;
+      let writePriv = false;
+      if (this.canInvite != false){
+        writePriv = (<HTMLInputElement>document.getElementById ("write" + (i))).checked;
+      }
+      if (!writePriv && !readPriv) continue; // Nothing was ticked for this user.
+      let permission = writePriv ? "write" : "read";
+      let userID = '';
+      this.users.forEach((user) => {
+        if (user.name == username) {
+          userID = user._id;
+        }
+      });
+      if (userID == this._authService.getID()) continue;
+      arr.push ({
+          "_id": userID,
+          "permission": permission
+      });
+    }
+
+    object._id = document.getElementById ("toUpdate").innerText
+    object.users = arr;
+    object.useCases = [];
+    this._dataService.inviteUsers (object);
+  }
 
   openProject(){
     let projectToOpen = this.selectedProject;

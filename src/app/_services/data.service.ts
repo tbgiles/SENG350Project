@@ -27,6 +27,10 @@ export class DataService {
     return this._http.get('/api/user/' + userId);
   }
 
+  inviteUsers (project: Project){
+    return this._http.post<Project>('/api/user/invite', project).subscribe();
+  }
+
   createUser(user: User){
     this._http.post<User>('/api/user/create', user).subscribe((obj) => {console.log(obj)});
   }
