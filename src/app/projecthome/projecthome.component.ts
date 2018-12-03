@@ -87,6 +87,7 @@ export class ProjectHomeComponent implements OnInit {
     })
 
    object.title = ProjectInfo[0].value.length > 0 ? ProjectInfo[0].value : "Untitled";
+   object.description = ProjectInfo[1].value.length > 0 ? ProjectInfo[1].value : "No description";
    object.users = arr;
    object.useCases = [];
    this._dataService.createProject(object);
@@ -122,8 +123,9 @@ export class ProjectHomeComponent implements OnInit {
       "permission": "owner"
     })
 
-    object._id = document.getElementById ("toUpdate").innerText;
+    object._id = this.selectedProject._id;
     object.title = ProjectInfo[0].value.length > 0 ? ProjectInfo[0].value : "Untitled";
+    object.description = ProjectInfo[1].value.length > 0 ? ProjectInfo[1].value : "No description";
     object.users = arr;
     object.useCases = [];
     this._dataService.updateProject (object);

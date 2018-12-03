@@ -282,9 +282,10 @@ router.post ('/project/update', (req,res) => {
   const project = req.body;
   let promises = [];
   connection((db) => {
-   db.collection('projects').findOne ({_id: ObjectID (project._id.trim())}).then ((obj) => { // Find the project to Update
-      promises.push (db.collection('projects').replaceOne({_id:ObjectID(project._id.trim())}, // Replace it with the new user list
-      {"useCases": obj.useCases, "users": project.users , "title": project.title}));
+   db.collection('projects').findOne ({_id: ObjectID(project._id)}).then ((obj) => { // Find the project to Update
+     console.dir(obj);
+     promises.push (db.collection('projects').replaceOne({_id:ObjectID(project._id.trim())}, // Replace it with the new user list
+      {"useCases": obj.useCases, "users": project.users , "title": project.title, "description": project.description}));
       obj.users.forEach ((user)=>{ // For each previous user
         promises.push(db.collection ('users').findOne ({_id: ObjectID(user._id)}).then ((user) =>{
             let index = user.projects.findIndex(function(i){ return JSON.stringify(i._id) === JSON.stringify(obj._id);}); //Splice out the project we're updating

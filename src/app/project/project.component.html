@@ -1,4 +1,4 @@
-<div *ngIf="project"><h1>{{project.title | uppercase}}</h1><h2>Owner: {{owner | uppercase}}</h2></div>
+<div *ngIf="project"><h1>{{project.title | uppercase}}</h1><h2>Owner: {{owner | uppercase}}</h2><h3>Description: {{project.description}}</h3></div>
 <button class="select-button" *ngIf="canEdit && isOwner" (click)="deleteProjectConf.open()">Delete Project</button>
 <button class="select-button" *ngIf="isOwner" (click)="transferProjectModal.open()">Transfer Ownership</button>
 <div class="usecase-container">

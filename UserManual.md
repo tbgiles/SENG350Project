@@ -84,17 +84,17 @@ To delete a user, the process is similar to creating a user. The user must first
 ![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/accountManagement.png)
 
 ## Creating a Project
-To create a project, first log in as the user who the project will be initially owned by. Once logged in, select the "Projects" tab in the upper right corner, which will redirect to a page showing all projects owned by the logged-in user, as well as an option to create a new project.  
+To create a project, first log in as the user who the project will be initially owned by. Once logged in, select the "Projects" tab in the upper right corner, which will redirect you to a page showing all projects owned by the currently logged-in user, as well as an option to create a new project.  
 
 ![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/projects_overview.PNG)  
 
-Select the option to "Create a new project" which will display a modal with a form to enter the information for a new project. Fill in the title of the project and select the project permissions for other users. Once this information is entered, select the "submit" button at the bottom of the modal.  
+Selecting the button to "Create a new project" which will display a modal with a form to enter the information for a new project. Fill in the title of the project, a project description, and select the project permissions for other users (read/write). Once this information is entered, select the "submit" button at the bottom of the modal.  
 
 ![](https://github.com/tbgiles/SENG350Project/blob/master/usermanual_images/create_project_modal.PNG)
 
-The newly created project will now be visible in the projects overview page.  
+This will create the new project, and will now be visible in the projects overview page for all those with permissions to either view or edit.  
 
-(Need to add image)
+TODO: (Need to add new images for project create and update to show the project description image)
 
 
 ## Viewing a Project
