@@ -157,4 +157,7 @@ To delete a use case, first log in and navigate to the project view. Select the 
 
 
 ## Known Problems and Limitations
-(TO DO)
+After delevoping the application, we have noted the following problems and limitations:  
+- Use case structure may not be sufficient for all users. The form for creating a new use case does not allow the user to add additional information than the fields in the form, and thus makes the use of the application somewhat limited.
+- The application currently allows users with duplicate names and projects with duplicate names as calls to the API use the object ID to distinguish between objects rather than the name. To remedy this, we would either add a unique identifier to duplicate names, or use a different login system for the user to distinguish between users with a shared name.
+- The application is not scalable with its current structure. The application uses client side rendering and processing which means the data displayed on the page is only visible once it has rendered, which makes the application appear slow. Additionally, when creating users/projects/use cases the new object does not always appear on the page instantly. This is because of an incorrect use of promise chains where the applications handle promises one at a time rather than all at a time.
