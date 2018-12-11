@@ -175,19 +175,16 @@ router.post('/user/delete', (req, res) => {
           // Delete user.
           promises.push(db.collection('users').deleteOne({_id: ObjectID(deletingUser._id)}));
           // Submit all database queries
-          console.dir(promises);
           Promise.all(promises)
             .then((data) => {
               res.status(200).send({"message" : "OK"});
             })
             .catch((err) => {
-              console.log("OH NOES");
               console.dir(err);
               sendError(err, res);
             });
         })
         .catch((err) => {
-          console.log("OH NOES2");
           console.dir(err);
           sendError(err, res);
         });
@@ -278,7 +275,6 @@ router.post ('/project/update', (req,res) => {
   let promises = [];
   connection((db) => {
    db.collection('projects').findOne ({_id: ObjectID(project._id)}).then ((obj) => { // Find the project to Update
-     console.dir(obj);
      promises.push (db.collection('projects').replaceOne({_id:ObjectID(project._id.trim())}, // Replace it with the new user list
       {"useCases": obj.useCases, "users": project.users , "title": project.title, "description": project.description}));
       obj.users.forEach ((user)=>{ // For each previous user
